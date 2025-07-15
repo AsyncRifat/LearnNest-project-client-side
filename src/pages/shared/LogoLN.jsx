@@ -10,7 +10,7 @@ const LogoLN = () => {
           alt="logo"
           className="md:w-12 md:h-12 w-9 h-9"
         />
-        <h2 className="font-bold md:font-extrabold text-base md:text-2xl text-violet-600 font-quicksand">
+        <h2 className="font-bold md:font-extrabold text-base md:text-2xl text-violet-500 font-quicksand">
           LearnNest
         </h2>
       </Link>
