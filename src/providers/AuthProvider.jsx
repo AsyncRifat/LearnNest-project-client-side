@@ -68,7 +68,6 @@ const AuthProvider = ({ children }) => {
     });
     return () => {
       unSubscribe();
-      console.log('Not available user right Now');
     };
   }, []);
 

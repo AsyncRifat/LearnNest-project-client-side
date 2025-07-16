@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 const LogoLN = () => {
   return (
     <>
-      <Link className=" flex items-end mx-1 md:mx-9">
+      <Link className=" flex items-end mx-1 md:mx-9" to="/">
         <img
           src="https://i.ibb.co/DXSqWQx/study-64.png"
           alt="logo"
