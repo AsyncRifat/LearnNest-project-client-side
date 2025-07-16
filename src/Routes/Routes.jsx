@@ -4,6 +4,7 @@ import ErrorPage from '../components/errorPage/ErrorPage';
 import AuthLayout from '../layout/AuthLayout';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
+import Home from '../pages/Home/Home';
 
 export const router = createBrowserRouter([
   {
@@ -13,9 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <p className="font-extrabold text-7xl text-teal-500">connected</p>
-        ),
+        Component: Home,
       },
     ],
   },

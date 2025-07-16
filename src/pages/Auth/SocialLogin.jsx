@@ -1,8 +1,21 @@
 import { FcGoogle } from 'react-icons/fc';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router';
 
-const SocialLogin = () => {
-  const handleGoogleSignIn = () => {
+const SocialLogin = ({ setWrongMessage }) => {
+  const { signInWithGoogle } = useAuth();
+  const navigate = useNavigate();
+
+  const handleGoogleSignIn = async () => {
     console.log('social login');
+
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      setWrongMessage(err);
+    } finally {
+      navigate('/');
+    }
   };
 
   return (

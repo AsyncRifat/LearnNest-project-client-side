@@ -1,10 +1,24 @@
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import { RiMenuFold2Line } from 'react-icons/ri';
 import Theme from './theme/Theme';
 import { CgMenuRound } from 'react-icons/cg';
 import LogoLN from '../pages/shared/LogoLN';
+import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
+  const { logOut, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleUserSignOut = () => {
+    logOut()
+      .then(() => {
+        navigate('/login');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const link = (
     <>
       <NavLink
@@ -39,30 +53,39 @@ const Navbar = () => {
         <span className="font-bold font-quicksand text-base">LearnNest</span>
       </NavLink>
 
-      <NavLink
-        to="login"
-        className={({ isActive }) =>
-          isActive
-            ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
-            : ' py-1 px-2 md:ml-1'
-        }
-      >
-        Sign In
-      </NavLink>
-      <NavLink
-        to="register"
-        className={({ isActive }) =>
-          isActive
-            ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2'
-            : ' py-1 px-2'
-        }
-      >
-        Sign Up
-      </NavLink>
-
-      <Link className="px-3 py-1.5 rounded-md bg-yellow-400 dark:bg-yellow-600">
-        Log Out
-      </Link>
+      {user ? (
+        <div className="ml-4">
+          <Link
+            onClick={handleUserSignOut}
+            className="px-3 py-1.5 rounded-md border border-amber-400 hover:bg-amber-500"
+          >
+            Log Out
+          </Link>
+        </div>
+      ) : (
+        <>
+          <NavLink
+            to="login"
+            className={({ isActive }) =>
+              isActive
+                ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
+                : ' py-1 px-2 md:ml-1'
+            }
+          >
+            Sign In
+          </NavLink>
+          <NavLink
+            to="register"
+            className={({ isActive }) =>
+              isActive
+                ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2'
+                : ' py-1 px-2'
+            }
+          >
+            Sign Up
+          </NavLink>
+        </>
+      )}
     </>
   );
   return (
@@ -92,7 +115,7 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div className="navbar-end  hidden lg:flex menu menu-horizontal px-1 mr-5">
+        <div className="navbar-end  hidden lg:flex menu menu-horizontal px-1 mr-10">
           {link}
         </div>
       </div>

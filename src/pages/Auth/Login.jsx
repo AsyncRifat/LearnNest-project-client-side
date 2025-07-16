@@ -1,25 +1,62 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { BeatLoader } from 'react-spinners';
 import SocialLogin from './SocialLogin';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
+import useAuth from '../../hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   useDocumentTitle('LearnNest | Login');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [wrongMessage, setWrongMessage] = useState('');
+
+  const { signInUser, forgotPassword } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    getValues,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = data => {
-    console.log(data);
-    setLoading(true);
+  const onSubmit = async data => {
+    const email = data?.email;
+    const password = data?.password;
+
+    try {
+      await signInUser(email, password);
+      setLoading(true);
+      reset();
+      setWrongMessage();
+      navigate('/');
+    } catch (error) {
+      setWrongMessage(error);
+      toast.error('Something went wrong');
+    }
+  };
+
+  const handleForgotPassword = async e => {
+    e.preventDefault();
+    const email = getValues('email');
+
+    if (!email) {
+      toast.error('Please enter your email');
+      return;
+    }
+
+    try {
+      await forgotPassword(email);
+      toast.success('Reset email sent. Check your inbox!');
+    } catch (error) {
+      setWrongMessage('Failed to send reset email', error);
+      toast.error('Something went wrong');
+    }
   };
   return (
     <>
@@ -44,7 +81,7 @@ const Login = () => {
           <div className="relative">
             <input
               type={showPassword ? 'text' : 'password'}
-              {...register('password', { required: true, minLength: 6 })}
+              {...register('password', { minLength: 6 })}
               className="input"
               placeholder="Password"
             />
@@ -59,9 +96,6 @@ const Login = () => {
               {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
 
-            {errors.password?.type === 'required' && (
-              <p className="text-red-500">Password is required</p>
-            )}
             {errors.password?.type === 'minLength' && (
               <p className="text-red-500">
                 Password must be 6 characters or longer
@@ -70,7 +104,13 @@ const Login = () => {
           </div>
 
           <div>
-            <Link className="link link-hover">Forgot password?</Link>
+            <Link
+              type="button"
+              onClick={handleForgotPassword}
+              className="link link-hover"
+            >
+              Forgot password?
+            </Link>
           </div>
         </fieldset>
         <button
@@ -82,13 +122,22 @@ const Login = () => {
         </button>
       </form>
 
+      {wrongMessage && (
+        <p className="text-xs mt-1">
+          <span className="font-semibold">NB:</span>{' '}
+          <span className="font-normal text-red-500">
+            Check your correct Email & Password
+          </span>
+        </p>
+      )}
+
       <p className="text-xs mt-4">
         Don't have any account?{' '}
         <Link to="/register" className="ink link-info">
           Register
         </Link>
       </p>
-      <SocialLogin />
+      <SocialLogin setWrongMessage={setWrongMessage} />
     </>
   );
 };

@@ -1,25 +1,51 @@
 import React, { useState } from 'react';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import { imageUpload } from '../../utils/utils';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
+import useAuth from '../../hooks/useAuth';
+import { BeatLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   useDocumentTitle('LearnNest | Register');
+  const { createUser, updateUserProfile } = useAuth();
   const [imageUrl, setImageUrl] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    watch,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = data => {
-    console.log(data, imageUrl);
+  const passwordValue = watch('password');
+
+  const onSubmit = async data => {
+    const email = data?.email;
+    const password = data?.password;
+    const name = data?.name;
+
+    try {
+      await createUser(email, password);
+
+      await updateUserProfile(name, imageUrl);
+
+      setLoading(true);
+      reset(reset);
+
+      navigate('/');
+    } catch (error) {
+      console.log(error.message);
+      toast.error('Something went wrong');
+    }
   };
 
   const handleImageUpload = async e => {
@@ -29,7 +55,6 @@ const Register = () => {
     try {
       const imageURL = await imageUpload(image);
       setImageUrl(imageURL);
-      console.log(imageURL);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +95,7 @@ const Register = () => {
           </label>
 
           {/* name */}
-          <label className="label mt-5">Name</label>
+          <label className="label mt-3">Name</label>
           <input
             type="text"
             {...register('name', { required: true })}
@@ -129,13 +154,21 @@ const Register = () => {
                 Must be use capital,small,Special character needed
               </p>
             )}
+
+            {passwordValue && passwordValue.length < 6 && (
+              <p className="text-yellow-500 mt-1">Weak Password</p>
+            )}
+
+            {passwordValue && passwordValue.length >= 6 && (
+              <p className="text-green-600 mt-1">Strong Password</p>
+            )}
           </div>
         </fieldset>
         <button
           type="submit"
           className="btn bg-green-600 hover:bg-green-700 text-black mt-4 min-w-xs"
         >
-          Register
+          {loading ? <BeatLoader color="#4B0082" size={10} /> : 'Register'}
         </button>
       </form>
 
