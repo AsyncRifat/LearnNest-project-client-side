@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
 import { imageUpload } from '../../utils/utils';
 import { FaCloudUploadAlt } from 'react-icons/fa';
@@ -18,6 +18,10 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from || '/';
+
+  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -28,6 +32,7 @@ const Register = () => {
 
   const passwordValue = watch('password');
 
+  // create user
   const onSubmit = async data => {
     const email = data?.email;
     const password = data?.password;
@@ -41,13 +46,14 @@ const Register = () => {
       setLoading(true);
       reset(reset);
 
-      navigate('/');
+      navigate(from, { state: { spinnerLoginHome: true } });
     } catch (error) {
       console.log(error.message);
       toast.error('Something went wrong');
     }
   };
 
+  // handle image
   const handleImageUpload = async e => {
     e.preventDefault();
     const image = e.target.files[0];

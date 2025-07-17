@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router';
-import { RiLogoutBoxRLine, RiMenuFold2Line } from 'react-icons/ri';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
 import Theme from './theme/Theme';
-import { CgMenuGridO, CgMenuRound } from 'react-icons/cg';
+import { CgMenuGridO } from 'react-icons/cg';
 import LogoLN from '../pages/shared/LogoLN';
 import useAuth from '../hooks/useAuth';
 import avatarImg from '../assets/placeholder.jpg';
@@ -13,7 +13,6 @@ import { FaUserCircle } from 'react-icons/fa';
 const Navbar = () => {
   const { logOut, user } = useAuth();
   const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleUserSignOut = () => {
@@ -39,7 +38,7 @@ const Navbar = () => {
         Home
       </NavLink>
       <NavLink
-        to="/b"
+        to="/all-approved-classes"
         className={({ isActive }) =>
           isActive
             ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
@@ -49,7 +48,7 @@ const Navbar = () => {
         All Classes
       </NavLink>
       <NavLink
-        to="/c"
+        to="/teacher-request"
         className={({ isActive }) =>
           isActive
             ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
@@ -66,15 +65,19 @@ const Navbar = () => {
             {/* Dropdown btn */}
             <div
               onClick={() => setIsOpen(!isOpen)}
-              className=" md:py-1 md:px-2 border-1 border-neutral-200 flex flex-row items-center gap-3 rounded-full cursor-pointer hover:shadow-md transition "
+              className=" md:py-1 md:px-2 md:border-1 border-neutral-200 flex flex-row items-center gap-3 md:rounded-full cursor-pointer md:hover:shadow-md transition "
             >
-              <AiOutlineMenu />
+              <p className="md:hidden ml-15 font-semibold">Menu</p>
+
+              <div className="hidden md:block">
+                <AiOutlineMenu />
+              </div>
               <div className="hidden md:block">
                 {/* Avatar */}
                 <img
                   className="rounded-full w-8 h-8 object-cover"
                   referrerPolicy="no-referrer"
-                  src={user && user.photoURL ? user.photoURL : avatarImg}
+                  src={user && user?.photoURL ? user?.photoURL : avatarImg}
                   alt="profile"
                   height="30"
                   width="30"
@@ -82,7 +85,7 @@ const Navbar = () => {
               </div>
             </div>
             {isOpen && (
-              <div className="absolute rounded-xl shadow-xl w-[40vw] md:w-[10vw] bg-gray-200 dark:bg-gray-300 overflow-hidden right-0 top-12 text-sm dark:text-black">
+              <div className="absolute rounded-xl shadow-xl w-[40vw] md:w-[10vw] bg-gray-200 dark:bg-gray-300 overflow-hidden right-0 top-12 text-sm dark:text-black ">
                 <div className="grid grid-cols-1 text-center  pt-2">
                   <p className="px-3 py-1.5 font-semibold flex items-center gap-2">
                     <FaUserCircle className="text-lg text-violet-600" />
@@ -136,8 +139,8 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="sticky top-0 z-40">
-      <div className="navbar relative z-10 bg-base-100 shadow-sm group">
+    <div className="sticky top-0 z-40 ">
+      <div className="navbar relative z-10 bg-base-100 shadow-sm group md:h-[74px]">
         <div className="navbar-start">
           <LogoLN />
         </div>

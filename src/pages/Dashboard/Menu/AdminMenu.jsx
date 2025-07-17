@@ -1,6 +1,4 @@
-import React from 'react';
 import MenuItem from './MenuItem';
-import { BsFillHouseAddFill } from 'react-icons/bs';
 import { FaRegClipboard, FaUsers } from 'react-icons/fa';
 import { HiBookOpen } from 'react-icons/hi';
 

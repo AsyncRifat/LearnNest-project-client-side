@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { BeatLoader } from 'react-spinners';
 import SocialLogin from './SocialLogin';
 import useDocumentTitle from '../../utils/useDocumentTitle';
@@ -13,10 +13,15 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [wrongMessage, setWrongMessage] = useState('');
-
   const { signInUser, forgotPassword } = useAuth();
+
+  const location = useLocation();
+
+  // The state will come from PrivateRoute
+  const from = location.state?.from || '/';
   const navigate = useNavigate();
 
+  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -25,6 +30,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // login user
   const onSubmit = async data => {
     const email = data?.email;
     const password = data?.password;
@@ -34,13 +40,14 @@ const Login = () => {
       setLoading(true);
       reset();
       setWrongMessage();
-      navigate('/');
+      navigate(from, { state: { spinnerLoginHome: true } });
     } catch (error) {
       setWrongMessage(error);
       toast.error('Something went wrong');
     }
   };
 
+  // forgot password
   const handleForgotPassword = async e => {
     e.preventDefault();
     const email = getValues('email');

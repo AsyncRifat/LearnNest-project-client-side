@@ -7,6 +7,16 @@ import Register from '../pages/Auth/Register';
 import Home from '../pages/Home/Home';
 import DashboardLayout from '../layout/DashboardLayout';
 import Profile from '../pages/Dashboard/Profile/Profile';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import TeacherRequest from '../pages/Dashboard/Admin/TeacherRequest';
+import Users from '../pages/Dashboard/Admin/Users';
+import AllClassesAdmin from '../pages/Dashboard/Admin/AllClassesAdmin';
+import AddClass from '../pages/Dashboard/Teacher/AddClass';
+import MyClass from '../pages/Dashboard/Teacher/MyClass';
+import MyEnrollClass from '../pages/Dashboard/Student/MyEnrollClass';
+import AllClasses from '../pages/Classes/AllClasses';
+import TeachOnPage from '../pages/ApplyTeacher/TeachOnPage';
+import Forbidden from '../pages/Forbidden/Forbidden';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +27,18 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: 'all-approved-classes',
+        Component: AllClasses,
+      },
+      {
+        path: 'teacher-request',
+        Component: TeachOnPage,
+      },
+      {
+        path: 'forbidden',
+        Component: Forbidden,
       },
     ],
   },
@@ -37,7 +59,11 @@ export const router = createBrowserRouter([
 
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -47,6 +73,34 @@ export const router = createBrowserRouter([
           </p>
         ),
       },
+      // Admin panel
+      {
+        path: 'teacher-request',
+        element: <TeacherRequest />,
+      },
+      {
+        path: 'users-request',
+        element: <Users />,
+      },
+      {
+        path: 'all-classes-request',
+        element: <AllClassesAdmin />,
+      },
+      // Teacher panel
+      {
+        path: 'add-class',
+        element: <AddClass />,
+      },
+      {
+        path: 'my-class',
+        element: <MyClass />,
+      },
+      // student panel
+      {
+        path: 'my-enroll-class',
+        element: <MyEnrollClass />,
+      },
+      // common
       {
         path: 'profile',
         element: <Profile />,

@@ -1,20 +1,21 @@
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 const SocialLogin = ({ setWrongMessage }) => {
   const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
-  const handleGoogleSignIn = async () => {
-    console.log('social login');
+  const location = useLocation();
+  const from = location.state?.from || '/';
 
+  const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
     } catch (err) {
       setWrongMessage(err);
     } finally {
-      navigate('/');
+      navigate(from, { state: { spinnerLoginHome: true } });
     }
   };
 
