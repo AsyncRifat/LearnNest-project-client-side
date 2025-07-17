@@ -43,7 +43,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'teacher-request',
-        Component: TeachOnPage,
+        element: (
+          <PrivateRoute>
+            <TeachOnPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'forbidden',
