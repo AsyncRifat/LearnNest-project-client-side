@@ -3,7 +3,7 @@ import LogoLN from '../../shared/LogoLN';
 
 const ContactComponent = () => {
   return (
-    <section className="bg-violet-50 dark:bg-gray-900 py-10 px-4 md:px-0">
+    <section className="bg-violet-50 dark:bg-gray-900 py-10 px-4 md:px-0 my-15">
       <div className="max-w-4xl mx-auto text-center">
         {/* Logo */}
         <LogoLN />

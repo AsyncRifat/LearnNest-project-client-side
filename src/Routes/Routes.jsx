@@ -17,6 +17,7 @@ import MyEnrollClass from '../pages/Dashboard/Student/MyEnrollClass';
 import AllClasses from '../pages/Classes/AllClasses';
 import TeachOnPage from '../pages/ApplyTeacher/TeachOnPage';
 import Forbidden from '../pages/Forbidden/Forbidden';
+import ClassDetails from '../pages/Classes/ClassDetails';
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,14 @@ export const router = createBrowserRouter([
       {
         path: 'all-approved-classes',
         Component: AllClasses,
+      },
+      {
+        path: 'classDetails',
+        element: (
+          <PrivateRoute>
+            <ClassDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'teacher-request',

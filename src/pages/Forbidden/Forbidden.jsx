@@ -1,7 +1,9 @@
 import { FaBan, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router';
+import useDocumentTitle from '../../utils/useDocumentTitle';
 
 const Forbidden = () => {
+  useDocumentTitle('Forbidden');
   return (
     <div className="flex flex-col items-center justify-center px-4 text-center pt-15 md:pt-28">
       <FaBan className="text-red-500 text-7xl mb-4 animate-pulse" />

@@ -65,7 +65,7 @@ const Navbar = () => {
             {/* Dropdown btn */}
             <div
               onClick={() => setIsOpen(!isOpen)}
-              className=" md:py-1 md:px-2 md:border-1 border-neutral-200 flex flex-row items-center gap-3 md:rounded-full cursor-pointer md:hover:shadow-md transition "
+              className=" md:py-1 md:px-2 md:border-1 border-neutral-200 dark:border-gray-600 flex flex-row items-center gap-3 md:rounded-full cursor-pointer md:hover:shadow-lg transition "
             >
               <p className="md:hidden ml-15 font-semibold">Menu</p>
 
@@ -140,7 +140,7 @@ const Navbar = () => {
   );
   return (
     <div className="sticky top-0 z-40 ">
-      <div className="navbar relative z-10 bg-base-100 shadow-sm group md:h-[74px]">
+      <div className="navbar relative z-10 bg-base-100 dark:bg-[#2C3A47] shadow-sm group md:h-[74px]">
         <div className="navbar-start">
           <LogoLN />
         </div>

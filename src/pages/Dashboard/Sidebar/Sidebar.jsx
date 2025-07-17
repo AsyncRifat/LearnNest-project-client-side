@@ -57,7 +57,7 @@ const Sidebar = () => {
         } `}
       >
         <div className="relative">
-          <div className="sticky -top-4 z-20 w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-cyan-200 dark:bg-green-700 mx-auto">
+          <div className="sticky -top-4 z-20 w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-linear-to-r from-violet-400 to-green-400 dark:bg-green-700 mx-auto">
             <LogoLN />
           </div>
 
