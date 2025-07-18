@@ -1,5 +1,10 @@
 const UserDataRows = ({ user }) => {
   const { name, email, role, image, status } = user;
+
+  const handleMakeAdmin = () => {
+    console.log('admin making');
+  };
+
   return (
     <>
       {!user || user.length === 0 ? (
@@ -37,16 +42,18 @@ const UserDataRows = ({ user }) => {
           </td>
 
           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-            <span className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight ">
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
-              ></span>
-              <span className="relative">Update Role</span>
-            </span>
-
-            {/* Modal */}
-            {/* <UpdateUserModal /> */}
+            <button
+              className="badge badge-success hidden md:block"
+              onClick={handleMakeAdmin}
+            >
+              Make Admin
+            </button>
+            <button
+              className="badge badge-success block md:hidden"
+              onClick={handleMakeAdmin}
+            >
+              Make_Admin
+            </button>
           </td>
         </tr>
       )}

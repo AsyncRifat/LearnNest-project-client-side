@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import UserDataRows from '../TableRows/UsersDataRows';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import useSkeleton from '../../../hooks/useSkeleton';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const Users = () => {
   useDocumentTitle('LearnNest | Make Admin');
+  const loading = useSkeleton(400);
   const [searchEmail, setSearchEmail] = useState('');
   const [emailQuery, setEmailQuery] = useState('');
 
@@ -11,6 +14,7 @@ const Users = () => {
 
   const users = [
     {
+      id: 1,
       name: 'Mr. Rifat',
       email: 'ibrahim3rifat@gmail.com',
       role: 'student',
@@ -18,6 +22,7 @@ const Users = () => {
       status: 'Not-verified',
     },
     {
+      id: 2,
       name: 'Mr. Rifat',
       email: 'ibrahim3rifat@gmail.com',
       role: 'student',
@@ -25,6 +30,7 @@ const Users = () => {
       status: 'Not-verified',
     },
     {
+      id: 3,
       name: 'Mr. Rifat',
       email: 'ibrahim3rifat@gmail.com',
       role: 'student',
@@ -38,6 +44,10 @@ const Users = () => {
     setEmailQuery(searchEmail);
   };
 
+  if (loading) {
+    return <LoadingSpinner smallHeight={true} />;
+  }
+
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="flex justify-between gap-2 my-4">
@@ -50,7 +60,7 @@ const Users = () => {
             <input
               type="text"
               placeholder="Search by email"
-              className="input input-bordered w-full pr-10 focus:outline-none border border-gray-400 bg-transparent text-black placeholder:text-gray-500"
+              className="input input-bordered w-full pr-10 focus:outline-none border border-gray-400 bg-transparent text-black dark:text-white placeholder:text-gray-500"
               value={searchEmail}
               onChange={e => setSearchEmail(e.target.value)}
             />
@@ -66,7 +76,9 @@ const Users = () => {
           </div>
 
           <button
-            className={`btn  text-white ${!searchEmail ? 'hidden' : 'block'}`}
+            className={`btn text-white  ${
+              !searchEmail ? 'hidden' : 'block bg-green-600'
+            }`}
             onClick={handleSearch}
             disabled={!searchEmail}
           >
@@ -122,7 +134,7 @@ const Users = () => {
               </thead>
               <tbody>
                 {users.map(user => (
-                  <UserDataRows key={user._id} user={user} />
+                  <UserDataRows key={user.id} user={user} />
                 ))}
               </tbody>
             </table>

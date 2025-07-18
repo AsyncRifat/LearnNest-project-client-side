@@ -1,4 +1,4 @@
-import { PulseLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
 const LoadingSpinner = ({ smallHeight }) => {
   return (
@@ -9,7 +9,7 @@ const LoadingSpinner = ({ smallHeight }) => {
       justify-center 
       items-center `}
     >
-      <PulseLoader size={20} color="" />
+      <ClipLoader size={40} color="#40407a" />
     </div>
   );
 };
