@@ -11,7 +11,8 @@ const AddClass = () => {
   // const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const loading = useSkeleton(3500);
+  const loading = useSkeleton(1000);
+  const [imageFileName, setImageFileName] = useState('');
 
   const {
     register,
@@ -24,6 +25,8 @@ const AddClass = () => {
   const handleImageUpload = async e => {
     e.preventDefault();
     const image = e.target.files[0];
+    setImageFileName(image?.name || '');
+    console.log(image);
 
     try {
       const imageURL = await imageUpload(image);
@@ -63,7 +66,7 @@ const AddClass = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-gray-900">
+      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
         <SkeletonLoader />
       </div>
     );
@@ -184,16 +187,17 @@ const AddClass = () => {
 
             <div className="col-span-1 mx-auto border-black my-auto">
               {imagePreview && (
-                <div className="flex items-center text-black gap-x-7">
-                  <p className=" text-gray-500 dark:text-gray-400 text-sm font-normal">
-                    Uploaded Image:
-                  </p>
+                <div>
                   <img
                     src={imagePreview}
                     alt="Preview"
                     className=" h-24 w-auto rounded shadow-2xl object-cover"
                     title="Uploaded Photo"
                   />
+                  <p className=" text-gray-500 dark:text-gray-400 text-xs font-thin mt-1">
+                    <span className="font-semibold">Name: </span>
+                    {imageFileName}
+                  </p>
                 </div>
               )}
             </div>
