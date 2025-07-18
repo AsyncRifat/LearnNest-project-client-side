@@ -3,12 +3,15 @@ import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import Button from '../../shared/Button';
 import { imageUpload } from '../../../utils/utils';
+import useSkeleton from '../../../hooks/useSkeleton';
+import SkeletonLoader from '../../shared/SkeletonLoader';
 
 const AddClass = () => {
   const { user } = useAuth();
   // const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const loading = useSkeleton(3500);
 
   const {
     register,
@@ -57,6 +60,14 @@ const AddClass = () => {
       setUploading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-gray-900">
+        <SkeletonLoader />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-4 md:mt-12 px-4 flex items-center justify-center">
