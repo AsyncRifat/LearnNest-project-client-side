@@ -1,7 +1,12 @@
 import React from 'react';
 import MyEnrollClassCard from '../../../card/MyEnrollClassCard';
+import useDocumentTitle from '../../../utils/useDocumentTitle';
+import useSkeleton from '../../../hooks/useSkeleton';
+import SkeletonLoaderCard from '../../shared/SkeletonLoaderCard';
 
 const MyEnrollClass = () => {
+  useDocumentTitle('LearnNest | My Enrolled Classes');
+  const loading = useSkeleton();
   const enrolledClassesData = [
     {
       id: '1',
@@ -16,6 +21,14 @@ const MyEnrollClass = () => {
       image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
     },
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
+        <SkeletonLoaderCard />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-5">

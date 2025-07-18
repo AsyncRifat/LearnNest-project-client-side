@@ -24,7 +24,7 @@ const TeachOnPage = () => {
   };
 
   return (
-    <div className=" flex items-center justify-center  dark:from-gray-900 dark:to-gray-800 px-1 md:px-4 mt-4 md:mt-10">
+    <div className=" flex items-center justify-center  dark:from-[#1e272e] dark:to-[#1e272e] px-1 md:px-4 mt-4 md:mt-10">
       <div className="w-full max-w-4xl bg-white/80 dark:bg-gray-900/70 backdrop-blur-lg border border-gray-200 dark:border-gray-800 shadow-xl rounded-3xl p-8 md:p-12">
         <h2 className="font-quicksand text-2xl font-bold text-center mb-6 text-gray-800 dark:text-white">
           Apply to Teach on <span className="text-green-600">LearnNest</span>
