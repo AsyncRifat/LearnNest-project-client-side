@@ -31,13 +31,21 @@ const MyEnrollClassCard = ({ enrolledClass }) => {
           {title}
         </h2>
 
-        {/* Instructor Name */}
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-          By: {name}
-        </p>
+        <div className="flex justify-between items-center">
+          {/* Instructor Name */}
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            By: {name}
+          </p>
+          <Link
+            className="bg-green-600 hover:bg-green-700 rounded-md text-sm text-center py-1.5 px-3 mx-auto justify-end"
+            to={'/dashboard/myEnroll-class/1'}
+          >
+            Continue
+          </Link>
+        </div>
 
         {/* Continue Button */}
-        <Button label={'Continue'} small={true} />
+        {/* <Button label={'Continue'} small={true} /> */}
       </div>
     </div>
   );

@@ -3,13 +3,15 @@ import { FaUserGraduate, FaTasks, FaFileAlt } from 'react-icons/fa';
 import { MdAddCircleOutline } from 'react-icons/md';
 
 import AssignmentModal from '../Modal/AssignmentModal';
+import useDocumentTitle from '../../../utils/useDocumentTitle';
 
 const MyClassDetails = () => {
-  let [isOpen, setIsOpen] = useState(false);
+  useDocumentTitle('My Class Details');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
-      <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+      <h2 className="font-quicksand text-2xl font-bold mb-7 text-gray-800 dark:text-gray-200">
         Class Progress
       </h2>
 
@@ -41,8 +43,10 @@ const MyClassDetails = () => {
       </div>
 
       {/* Assignment Section */}
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-medium text-gray-700">Assignments</h3>
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-y-5 sm:gap-y-0">
+        <h2 className="font-quicksand text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200">
+          Assignments
+        </h2>
         <button
           onClick={() => {
             setIsOpen(true);

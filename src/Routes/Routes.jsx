@@ -19,6 +19,7 @@ import TeachOnPage from '../pages/ApplyTeacher/TeachOnPage';
 import Forbidden from '../pages/Forbidden/Forbidden';
 import ClassDetails from '../pages/Classes/ClassDetails';
 import MyClassDetails from '../pages/Dashboard/Teacher/MyClassDetails';
+import MyEnrollClassDetails from '../pages/Dashboard/Student/MyEnrollClassDetails';
 
 export const router = createBrowserRouter([
   {
@@ -110,13 +111,17 @@ export const router = createBrowserRouter([
         element: <MyClass />,
       },
       {
-        path: 'my-class/1',
+        path: 'my-class/1', // TODO: dynamic path
         element: <MyClassDetails />,
       },
       // student panel
       {
         path: 'my-enroll-class',
         element: <MyEnrollClass />,
+      },
+      {
+        path: 'myEnroll-class/1', // TODO: dynamic path
+        element: <MyEnrollClassDetails />,
       },
       // common
       {

@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 
 const DashboardLayout = () => {
   return (
-    <div className="relative min-h-screen md:flex bg-teal-50 dark:bg-base-100">
+    <div className="relative min-h-screen md:flex bg-teal-50 dark:bg-base-100 min-w-screen">
       {/* Sidebar Component */}
       <Sidebar />
       {/* Dashboard Dynamic Content */}

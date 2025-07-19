@@ -5,8 +5,10 @@ import Button from '../../shared/Button';
 import { imageUpload } from '../../../utils/utils';
 import useSkeleton from '../../../hooks/useSkeleton';
 import SkeletonLoader from '../../shared/SkeletonLoader';
+import useDocumentTitle from '../../../utils/useDocumentTitle';
 
 const AddClass = () => {
+  useDocumentTitle('LearnNest | Add Class');
   const { user } = useAuth();
   // const navigate = useNavigate();
   const [imagePreview, setImagePreview] = useState(null);

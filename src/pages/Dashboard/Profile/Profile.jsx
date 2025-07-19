@@ -1,7 +1,9 @@
 import useAuth from '../../../hooks/useAuth';
+import useDocumentTitle from '../../../utils/useDocumentTitle';
 
 const Profile = () => {
   const { user } = useAuth();
+  useDocumentTitle(`Profile on ${user?.displayName}`);
 
   console.log(user);
   return (
