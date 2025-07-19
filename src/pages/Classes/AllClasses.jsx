@@ -13,12 +13,14 @@ const AllClasses = () => {
       id: '1',
       title: 'React Basics',
       name: 'John Doe',
+      status: 'approved',
       image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
     },
     {
       id: '2',
       title: 'Advanced JavaScript',
       name: 'Jane Smith',
+      status: 'approved',
       image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
     },
   ];
@@ -45,7 +47,7 @@ const AllClasses = () => {
         >
           Explore all the classes that have been reviewed and approved by the
           administration. Enroll in your preferred courses and start learning
-          from verified instructors today!{' '}
+          from verified instructors today!
         </Marquee>
       </div>
 
