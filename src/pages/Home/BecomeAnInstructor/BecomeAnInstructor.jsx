@@ -19,7 +19,10 @@ const BecomeAnInstructor = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-5 md:pt-24 pb-5 bg-violet-50 dark:bg-gray-900 px-9">
+      <div
+        data-aos="fade-up-right"
+        className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-5 md:pt-24 pb-5 bg-violet-50 dark:bg-gray-900 px-9"
+      >
         <div className="col-span-1">
           <img
             src={teacher}

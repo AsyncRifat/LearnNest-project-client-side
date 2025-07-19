@@ -1,6 +1,11 @@
 const FaqSection = () => {
   return (
-    <div className="mx-20 mb-10 mt-20">
+    <div
+      data-aos="fade-down"
+      data-aos-easing="linear"
+      data-aos-duration="1500"
+      className="mx-20 mb-10 mt-20"
+    >
       <div className="text-center">
         <h1 className="mb-5 md:mb-10">
           <span className="font-extrabold text-green-700 text-3xl">| </span>

@@ -8,7 +8,14 @@ import { router } from './Routes/Routes';
 
 // toast
 import { Toaster } from 'react-hot-toast';
+
+// auth provider
 import AuthProvider from './providers/AuthProvider';
+
+// aos
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+AOS.init();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

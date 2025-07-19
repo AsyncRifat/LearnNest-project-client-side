@@ -3,7 +3,11 @@ import { FaChalkboardTeacher, FaUserGraduate, FaUsers } from 'react-icons/fa';
 
 const CountUpPage = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-5 md:mt-24">
+    <div
+      data-aos="fade-left"
+      data-aos-duration="1000"
+      className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-5 md:mt-24"
+    >
       <div className="col-span-1 flex gap-x-5 flex-col">
         <div className="pl-10">
           <h2 className="">

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import useDocumentTitle from '../../utils/useDocumentTitle';
+import useSkeleton from '../../hooks/useSkeleton';
+import ReviewSkeleton from '../shared/ReviewSkeleton';
 
 const classInfo = {
   title: 'MERN Stack Development',
@@ -63,6 +66,8 @@ const reviews = [
 ];
 
 const ClassDetailsWithToggleReview = () => {
+  useDocumentTitle('LearnNest | Class Details');
+  const loading = useSkeleton(3000);
   const [showReviews, setShowReviews] = useState(false);
 
   return (
@@ -89,7 +94,7 @@ const ClassDetailsWithToggleReview = () => {
 
             <button
               onClick={() => setShowReviews(!showReviews)}
-              className="flex text-gray-700 border border-gray-200 px-2 py-0.5 gap-x-2"
+              className="flex text-gray-700 border border-gray-200 px-2 py-0.5 gap-x-2 cursor-pointer"
             >
               <FaStar className="text-yellow-500" size={20} />{' '}
               <span className="text-gray-500 text-sm">
@@ -123,36 +128,40 @@ const ClassDetailsWithToggleReview = () => {
               Reviews ({reviews.length})
             </h2>
             <div className="space-y-4">
-              {reviews.map(review => (
-                <div
-                  key={review.id}
-                  className="border p-3 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-500"
-                >
-                  <div className="flex justify-between ">
-                    <h3 className="font-medium text-gray-900 dark:text-gray-300">
-                      {review.name}
-                    </h3>
-                    <span className="text-sm text-gray-500 dark:text-gray-300">
-                      {review.date}
-                    </span>
+              {loading ? (
+                <ReviewSkeleton />
+              ) : (
+                reviews.map(review => (
+                  <div
+                    key={review.id}
+                    className="border p-3 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-500"
+                  >
+                    <div className="flex justify-between ">
+                      <h3 className="font-medium text-gray-900 dark:text-gray-300">
+                        {review.name}
+                      </h3>
+                      <span className="text-sm text-gray-500 dark:text-gray-300">
+                        {review.date}
+                      </span>
+                    </div>
+                    <div className="flex mb-1">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar
+                          key={i}
+                          className={`w-4 h-4 ${
+                            i < review.rating
+                              ? 'text-yellow-500'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {review.comment}
+                    </p>
                   </div>
-                  <div className="flex mb-1">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < review.rating
-                            ? 'text-yellow-500'
-                            : 'text-gray-300'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    {review.comment}
-                  </p>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         )}
