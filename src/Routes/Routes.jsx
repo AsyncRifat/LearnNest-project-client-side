@@ -18,6 +18,7 @@ import AllClasses from '../pages/Classes/AllClasses';
 import TeachOnPage from '../pages/ApplyTeacher/TeachOnPage';
 import Forbidden from '../pages/Forbidden/Forbidden';
 import ClassDetails from '../pages/Classes/ClassDetails';
+import MyClassDetails from '../pages/Dashboard/Teacher/MyClassDetails';
 
 export const router = createBrowserRouter([
   {
@@ -107,6 +108,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-class',
         element: <MyClass />,
+      },
+      {
+        path: 'my-class/1',
+        element: <MyClassDetails />,
       },
       // student panel
       {

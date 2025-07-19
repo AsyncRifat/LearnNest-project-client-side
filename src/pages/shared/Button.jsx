@@ -39,7 +39,7 @@ const Button = ({
           ${small ? 'py-1.5' : 'py-2'}
           ${small ? '' : 'w-full'}
           ${small ? 'font-light' : 'font-semibold'}
-          ${small ? 'border-[1px]' : 'border-2'}
+          ${small ? '' : 'border-2'}
           ${disabled ? 'disabled:hover:cursor-not-allowed' : ''}
         `}
     >

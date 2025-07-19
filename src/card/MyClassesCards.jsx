@@ -1,12 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 
 const MyClassesCards = ({ singleClass }) => {
   const { id, name, email, image, status, price, description, title } =
     singleClass;
-
-  const navigate = useNavigate();
 
   const handleDelete = classId => {
     Swal.fire({
@@ -30,10 +28,6 @@ const MyClassesCards = ({ singleClass }) => {
 
   const handleUpdate = id => {
     console.log(id);
-  };
-
-  const handleSeeDetails = () => {
-    navigate(`/dashboard/my-class/${id}`);
   };
 
   return (
@@ -89,19 +83,17 @@ const MyClassesCards = ({ singleClass }) => {
             Delete
           </button>
 
-          <button
+          {/* TODO: must be dynamic */}
+          <Link
+            to={'/dashboard/my-class/1'} //`/dashboard/my-class/${id}`
             className={`btn btn-success btn-sm ${
               status !== 'approved'
                 ? 'hover:cursor-not-allowed opacity-40 pointer-events-none'
                 : ''
             }`}
-            onClick={() => {
-              handleSeeDetails(id);
-            }}
-            // disabled={status !== 'approved'}
           >
             See Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>
