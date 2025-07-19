@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import Button from '../pages/shared/Button';
 import { FaDollarSign, FaUserGraduate } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const AllApprovedClassesCard = ({ SingleClass }) => {
   const { image } = SingleClass;
@@ -89,7 +89,12 @@ const AllApprovedClassesCard = ({ SingleClass }) => {
             </div>
           )}
 
-          <Button label={'Enroll'} small={true} />
+          <Link
+            to={'/classDetails/1'}
+            className="px-4 py-1.5 rounded-sm bg-violet-600 font-thin text-sm text-white"
+          >
+            Enroll
+          </Link>
         </div>
       </div>
     </div>

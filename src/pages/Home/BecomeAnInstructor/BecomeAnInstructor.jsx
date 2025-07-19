@@ -15,7 +15,7 @@ const BecomeAnInstructor = () => {
     }
   }, [user]);
 
-  console.log(navigateRoute);
+  // console.log(navigateRoute);
 
   return (
     <>

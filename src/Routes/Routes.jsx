@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         Component: AllClasses,
       },
       {
-        path: 'classDetails',
+        path: 'classDetails/1', // TODO: dynamic path
         element: (
           <PrivateRoute>
             <ClassDetails />
