@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import useAxios from '../hooks/useAxios';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 export const imageUpload = async fromImage => {
   const formImageData = new FormData();
@@ -14,12 +15,27 @@ export const imageUpload = async fromImage => {
   return data?.data?.display_url;
 };
 
+// for user add in db (not axios secure)
 export const useUserPostData = ({ endpoint, onSuccess, onError }) => {
   const axiosInstance = useAxios();
 
   return useMutation({
     mutationFn: async payload => {
       const result = await axiosInstance.post(endpoint, payload);
+      return result.data;
+    },
+    onSuccess,
+    onError,
+  });
+};
+
+// for data add in db
+export const usePostData = ({ endpoint, onSuccess, onError }) => {
+  const axiosSecure = useAxiosSecure();
+
+  return useMutation({
+    mutationFn: async payload => {
+      const result = await axiosSecure.post(endpoint, payload);
       return result.data;
     },
     onSuccess,

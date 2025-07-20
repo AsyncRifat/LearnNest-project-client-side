@@ -34,7 +34,7 @@ const Login = () => {
   // send user data in DB
   const { mutate: postData } = useUserPostData({
     endpoint: '/user',
-    onSuccess: () => toast.success('Saved user data in Database'),
+    onSuccess: () => toast.success('Log in Successfully'),
     onError: () => toast.error('Not save data in database'),
   });
 

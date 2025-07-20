@@ -2,6 +2,8 @@ import React from 'react';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
+import { usePostData } from '../../utils/utils';
+import toast from 'react-hot-toast';
 
 const TeachOnPage = () => {
   useDocumentTitle('LearnNest | Request');
@@ -17,10 +19,24 @@ const TeachOnPage = () => {
     formState: { errors },
   } = useForm();
 
+  const { mutate: postData } = usePostData({
+    endpoint: '/teacher-request',
+    onSuccess: () => toast.success('Send Request successfully'),
+    onError: () => toast.error('Request Failed'),
+  });
+
   const onSubmit = data => {
-    console.log('Submitted Data:', { name, email, image, data });
+    const teacherRequestData = {
+      name,
+      email,
+      image,
+      category: data?.category,
+      experience: data?.experience,
+      title: data?.title,
+    };
+    // call mutate
+    postData(teacherRequestData);
     reset();
-    // TODO: Send to server or API
   };
 
   return (
