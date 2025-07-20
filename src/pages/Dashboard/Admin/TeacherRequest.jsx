@@ -1,5 +1,3 @@
-import React from 'react';
-import TeacherRequestRows from '../TableRows/TeacherRequestRows';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';

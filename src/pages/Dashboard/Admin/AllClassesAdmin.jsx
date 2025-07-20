@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import useSkeleton from '../../../hooks/useSkeleton';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
 import SkeletonRow from '../../shared/SkeletonRow';
-import AllClassesAdminRow from '../TableRows/AllClassesAdminRow';
+import AllClassesAdminModal from '../Modal/AllClassesAdminModal';
 
 const AllClassesAdmin = () => {
   useDocumentTitle('LearnNest | Class Request');
   const loading = useSkeleton(600);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [singleTechRequest, setSingleTechRequest] = useState([]);
 
   const TeacherRequest = [
     {
@@ -41,6 +44,13 @@ const AllClassesAdmin = () => {
       status: 'rejected',
     },
   ];
+
+  const handleApproved = () => {
+    console.log('Approved');
+  };
+  const handleRejected = () => {
+    console.log('Rejected');
+  };
 
   if (loading) {
     return (
@@ -106,10 +116,94 @@ const AllClassesAdmin = () => {
             </thead>
             <tbody>
               {TeacherRequest.map(req => (
-                <AllClassesAdminRow key={req.id} teacherReq={req} />
+                // <AllClassesAdminRow key={req.id} teacherReq={req} />
+                <tr key={req.id}>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px]">
+                      {req?.title}
+                    </p>
+                  </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">
+                      {req?.email}
+                    </p>
+                  </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <img
+                      src={req?.image}
+                      alt={req?.title}
+                      className="h-9 w-12 rounded-sm object-cover"
+                    />
+                  </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm uppercase">
+                    {req?.status && (
+                      <p
+                        className={`${
+                          req?.status === 'pending'
+                            ? 'text-amber-500'
+                            : 'text-green-600'
+                        } ${req?.status === 'rejected' && 'text-red-500'}`}
+                      >
+                        {req?.status}
+                      </p>
+                    )}
+                  </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px] text-gray-900">
+                      {req?.description}
+                    </p>
+                  </td>
+
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm space-x-2.5">
+                    <div className="flex md:flex-row gap-2.5">
+                      {req?.status === 'approved' && (
+                        <button
+                          className=" px-2 py-1 text-violet-600 border hover:scale-105 border-violet-500 hover:border-violet-600 hover:cursor-pointer "
+                          onClick={() => {
+                            setIsModalOpen(true);
+                            setSingleTechRequest(req);
+                          }}
+                        >
+                          Progress
+                        </button>
+                      )}
+
+                      {(req?.status === 'approved' ||
+                        req?.status === 'pending') && (
+                        <button
+                          className=" px-2 py-1 text-red-500 border hover:scale-105 border-red-500 hover:border-red-600 hover:cursor-pointer"
+                          onClick={handleRejected}
+                        >
+                          Rejected
+                        </button>
+                      )}
+
+                      {req?.status === 'pending' && (
+                        <button
+                          className=" px-2 py-1 border hover:scale-105 text-green-600 border-green-700 hover:border-green-800 hover:cursor-pointer "
+                          onClick={handleApproved}
+                        >
+                          Approved
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
+
+          {/* Progress button for  modal */}
+          {isModalOpen && (
+            <AllClassesAdminModal
+              setIsModalOpen={setIsModalOpen}
+              singleTechRequest={singleTechRequest}
+            />
+          )}
         </div>
       </div>
     </div>
