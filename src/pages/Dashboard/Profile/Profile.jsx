@@ -11,7 +11,7 @@ const Profile = () => {
       <div className="bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5">
         <img
           alt="cover photo"
-          src="https://i.ibb.co/kgZpYk7R/1739355544165.jpg"
+          src="https://i.ibb.co/v6JjVtGw/cover-1.jpg"
           className="w-full mb-4 rounded-t-lg h-56 object-cover"
         />
         <div className="flex flex-col items-center justify-center p-4 -mt-16">

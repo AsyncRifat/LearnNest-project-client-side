@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import useAxios from '../hooks/useAxios';
 import useAxiosSecure from '../hooks/useAxiosSecure';
@@ -39,6 +39,29 @@ export const usePostData = ({ endpoint, onSuccess, onError }) => {
       return result.data;
     },
     onSuccess,
+    onError,
+  });
+};
+
+export const usePatchData = ({ endpoint, queryKey, onSuccess, onError }) => {
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, data }) => {
+      const res = await axiosSecure.patch(`${endpoint}/${id}`, data);
+      return res.data;
+    },
+    onSuccess: (data, variables, context) => {
+      console.log('Mutation success called!');
+      if (queryKey) {
+        queryClient.invalidateQueries({ queryKey: [queryKey] });
+      }
+
+      if (onSuccess) {
+        onSuccess(data, variables, context);
+      }
+    },
     onError,
   });
 };

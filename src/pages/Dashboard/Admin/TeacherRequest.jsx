@@ -4,6 +4,8 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import SkeletonLoader from '../../shared/SkeletonLoader';
 import { useState } from 'react';
 import TeacherRequestModal from '../Modal/TeacherRequestModal';
+import toast from 'react-hot-toast';
+import { usePatchData } from '../../../utils/utils';
 
 const TeacherRequest = () => {
   useDocumentTitle('LearnNest | Teacher Request');
@@ -12,7 +14,11 @@ const TeacherRequest = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [singleTechRequest, setSingleTechRequest] = useState([]);
 
-  const { data: teacherRequest = [], isLoading } = useQuery({
+  const {
+    data: teacherRequest = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['teacherRequest'],
     queryFn: async () => {
       const res = await axiosSecure('/all-request');
@@ -22,11 +28,28 @@ const TeacherRequest = () => {
     },
   });
 
-  const handleApproved = () => {
-    console.log('Approved');
+  const { mutate: updateUserStatus } = usePatchData({
+    endpoint: '/teacher-request-status',
+    queryKey: 'teacherRequest',
+    onSuccess: () => {
+      toast.success('User updated successfully!');
+      refetch();
+    },
+    onError: () => toast.error('Failed to update user.'),
+  });
+
+  const handleApproved = req => {
+    updateUserStatus({
+      id: req?._id,
+      data: { status: 'approved', role: 'teacher', email: req?.email },
+    });
   };
-  const handleRejected = () => {
+  const handleRejected = req => {
     console.log('Rejected');
+    updateUserStatus({
+      id: req?._id,
+      data: { status: 'rejected' },
+    });
   };
 
   return (
@@ -155,7 +178,9 @@ const TeacherRequest = () => {
                           req?.status === 'pending') && (
                           <button
                             className=" px-2 py-1 text-gray-100 dark:text-gray-200 bg-red-500 hover:bg-red-600 hover:cursor-pointer"
-                            onClick={handleRejected}
+                            onClick={() => {
+                              handleRejected(req);
+                            }}
                           >
                             Rejected
                           </button>
@@ -164,7 +189,9 @@ const TeacherRequest = () => {
                         {req?.status === 'pending' && (
                           <button
                             className=" px-2 py-1 text-gray-100 dark:text-gray-200 bg-green-700 hover:bg-green-800 hover:cursor-pointer"
-                            onClick={handleApproved}
+                            onClick={() => {
+                              handleApproved(req);
+                            }}
                           >
                             Approved
                           </button>
