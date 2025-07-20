@@ -1,8 +1,25 @@
-const UserDataRows = ({ user }) => {
-  const { name, email, role, image, status } = user;
+import toast from 'react-hot-toast';
+import { usePatchData } from '../../../utils/utils';
 
-  const handleMakeAdmin = () => {
-    console.log('admin making');
+const UserDataRows = ({ user, refetch }) => {
+  const { _id, name, email, role, image, status } = user;
+
+  const { mutate: updateUserStatus } = usePatchData({
+    endpoint: '/make-admin',
+    queryKey: 'search-users',
+    onSuccess: () => {
+      toast.success('Admin made!');
+      refetch();
+    },
+    onError: () => toast.error('Failed to update user.'),
+  });
+
+  const handleMakeAdmin = id => {
+    console.log('admin making', id);
+    updateUserStatus({
+      id: id,
+      data: { role: 'admin' },
+    });
   };
 
   return (
@@ -42,18 +59,26 @@ const UserDataRows = ({ user }) => {
           </td>
 
           <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-            <button
-              className="badge badge-success hidden md:block"
-              onClick={handleMakeAdmin}
-            >
-              Make Admin
-            </button>
-            <button
-              className="badge badge-success block md:hidden"
-              onClick={handleMakeAdmin}
-            >
-              Make_Admin
-            </button>
+            {(role === 'teacher' || role === 'student') && (
+              <button
+                className="badge badge-success hidden md:block"
+                onClick={() => {
+                  handleMakeAdmin(_id);
+                }}
+              >
+                Make Admin
+              </button>
+            )}
+            {(role === 'teacher' || role === 'student') && (
+              <button
+                className="badge badge-success block md:hidden"
+                onClick={() => {
+                  handleMakeAdmin(_id);
+                }}
+              >
+                Make_Admin
+              </button>
+            )}
           </td>
         </tr>
       )}

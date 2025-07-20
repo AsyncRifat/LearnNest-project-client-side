@@ -1,43 +1,32 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import UserDataRows from '../TableRows/UsersDataRows';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
 import useSkeleton from '../../../hooks/useSkeleton';
 import LoadingSpinner from '../../shared/LoadingSpinner';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const Users = () => {
   useDocumentTitle('LearnNest | Make Admin');
   const loading = useSkeleton(400);
   const [searchEmail, setSearchEmail] = useState('');
   const [emailQuery, setEmailQuery] = useState('');
+  const axiosSecure = useAxiosSecure();
 
-  console.log(emailQuery);
-
-  const users = [
-    {
-      id: 1,
-      name: 'Mr. Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      role: 'student',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'Not-verified',
+  // Query to search users
+  const {
+    data: users = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['search-users', emailQuery],
+    queryFn: async () => {
+      const res = await axiosSecure(
+        emailQuery ? `/users/search?email=${emailQuery}` : `/users/search`
+      );
+      return res.data;
     },
-    {
-      id: 2,
-      name: 'Mr. Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      role: 'student',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'Not-verified',
-    },
-    {
-      id: 3,
-      name: 'Mr. Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      role: 'student',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: '',
-    },
-  ];
+  });
 
   const handleSearch = () => {
     if (!searchEmail) return;
@@ -132,11 +121,25 @@ const Users = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {users.map(user => (
-                  <UserDataRows key={user.id} user={user} />
-                ))}
-              </tbody>
+              {isLoading ? (
+                <tbody>
+                  <tr>
+                    <td className="flex justify-center items-center">
+                      <span className="loading loading-dots loading-xs"></span>
+                    </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {users.map(user => (
+                    <UserDataRows
+                      key={user._id}
+                      user={user}
+                      refetch={refetch}
+                    />
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
         </div>
