@@ -1,6 +1,8 @@
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router';
+import { useUserPostData } from '../../utils/utils';
+import toast from 'react-hot-toast';
 
 const SocialLogin = ({ setWrongMessage }) => {
   const { signInWithGoogle } = useAuth();
@@ -9,9 +11,22 @@ const SocialLogin = ({ setWrongMessage }) => {
   const location = useLocation();
   const from = location.state?.from || '/';
 
+  // send user data in DB
+  const { mutate: postData } = useUserPostData({
+    endpoint: '/user',
+    onSuccess: () => toast.success('Saved user data in Database'),
+    onError: () => toast.error('Not save data in database'),
+  });
+
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+      const userPostData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      };
+      postData(userPostData);
     } catch (err) {
       setWrongMessage(err);
     } finally {

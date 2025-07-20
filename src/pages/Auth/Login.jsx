@@ -7,6 +7,7 @@ import useDocumentTitle from '../../utils/useDocumentTitle';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
+import { useUserPostData } from '../../utils/utils';
 
 const Login = () => {
   useDocumentTitle('LearnNest | Login');
@@ -30,13 +31,29 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  // send user data in DB
+  const { mutate: postData } = useUserPostData({
+    endpoint: '/user',
+    onSuccess: () => toast.success('Saved user data in Database'),
+    onError: () => toast.error('Not save data in database'),
+  });
+
   // login user
   const onSubmit = async data => {
     const email = data?.email;
     const password = data?.password;
 
     try {
-      await signInUser(email, password);
+      const result = await signInUser(email, password);
+
+      const userPostData = {
+        name: result?.user?.displayName,
+        email: result?.user?.email,
+        image: result?.user?.photoURL,
+      };
+      // call mutation
+      postData(userPostData);
+
       setLoading(true);
       reset();
       setWrongMessage();

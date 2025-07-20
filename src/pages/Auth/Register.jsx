@@ -3,7 +3,7 @@ import useDocumentTitle from '../../utils/useDocumentTitle';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from './SocialLogin';
-import { imageUpload } from '../../utils/utils';
+import { imageUpload, useUserPostData } from '../../utils/utils';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import useAuth from '../../hooks/useAuth';
@@ -32,15 +32,30 @@ const Register = () => {
 
   const passwordValue = watch('password');
 
+  // send user data in DB
+  const { mutate: postData } = useUserPostData({
+    endpoint: '/user',
+    onSuccess: () => toast.success('Saved user data in Database'),
+    onError: () => toast.error('Not save data in database'),
+  });
+
   // create user
   const onSubmit = async data => {
     const email = data?.email;
     const password = data?.password;
     const name = data?.name;
 
+    const userPostData = {
+      name,
+      email,
+      image: imageUrl,
+    };
+
     try {
       await createUser(email, password);
 
+      postData(userPostData);
+      // profile set
       await updateUserProfile(name, imageUrl);
 
       setLoading(true);
