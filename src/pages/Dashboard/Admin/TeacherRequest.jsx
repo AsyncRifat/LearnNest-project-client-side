@@ -1,49 +1,36 @@
 import React from 'react';
 import TeacherRequestRows from '../TableRows/TeacherRequestRows';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import SkeletonLoader from '../../shared/SkeletonLoader';
+import { useState } from 'react';
+import TeacherRequestModal from '../Modal/TeacherRequestModal';
 
 const TeacherRequest = () => {
   useDocumentTitle('LearnNest | Teacher Request');
+  const axiosSecure = useAxiosSecure();
+  const [skeletonCount, setSkeletonCount] = useState(3);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [singleTechRequest, setSingleTechRequest] = useState([]);
 
-  const TeacherRequest = [
-    {
-      id: 1,
-      name: 'Mr. Rifat',
-      experience: 'Beginner',
-      category: 'Web Development',
-      title: 'web course',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'pending',
+  const { data: teacherRequest = [], isLoading } = useQuery({
+    queryKey: ['teacherRequest'],
+    queryFn: async () => {
+      const res = await axiosSecure('/all-request');
+      const data = res.data;
+      setSkeletonCount(data.length);
+      return data;
     },
-    {
-      id: 2,
-      name: 'Mr. Ibrahim',
-      experience: 'Beginner',
-      category: 'Web Development',
-      title: 'web course',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'approved',
-    },
-    {
-      id: 3,
-      name: 'Mr. Rifat',
-      experience: 'Beginner',
-      category: 'Web Development',
-      title: 'web course',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'pending',
-    },
-    {
-      id: 4,
-      name: 'Mr. Rifat',
-      experience: 'Beginner',
-      category: 'Web Development',
-      title:
-        'web course we cvdye euue xuu xuuuu Manage and review teacher registration ',
-      image: 'https://i.ibb.co/XZhXqsjd/Screenshot-2024-01-03-at-07-47-29.jpg',
-      status: 'rejected',
-    },
-  ];
+  });
+
+  const handleApproved = () => {
+    console.log('Approved');
+  };
+  const handleRejected = () => {
+    console.log('Rejected');
+  };
+
   return (
     <div className="pb-5">
       <h2 className="font-quicksand text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200">
@@ -104,12 +91,101 @@ const TeacherRequest = () => {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {TeacherRequest.map(req => (
-                <TeacherRequestRows key={req.id} teacherReq={req} />
-              ))}
-            </tbody>
+            {isLoading ? (
+              <tbody>
+                {[...Array(skeletonCount)].map((_, i) => (
+                  <SkeletonLoader key={i} />
+                ))}
+              </tbody>
+            ) : (
+              <tbody>
+                {teacherRequest.map(req => (
+                  <tr key={req._id}>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {req?.name}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <img
+                        src={req?.image}
+                        alt={req?.name}
+                        className="h-7 w-7 rounded-full object-cover"
+                      />
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {req?.experience}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap max-w-[150px]  truncate">
+                        {req?.title}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <p className="text-gray-900 whitespace-no-wrap">
+                        {req?.category}
+                      </p>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm uppercase">
+                      {req?.status && (
+                        <p
+                          className={`${
+                            req?.status === 'pending'
+                              ? 'text-amber-500'
+                              : 'text-green-600'
+                          } ${req?.status === 'rejected' && 'text-red-500'}`}
+                        >
+                          {req?.status}
+                        </p>
+                      )}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
+                      <div className="flex md:flex-row gap-2.5">
+                        <button
+                          className=" px-2 py-1 text-gray-100 dark:text-gray-200 bg-violet-500 hover:bg-violet-600 hover:cursor-pointer"
+                          onClick={() => {
+                            setIsModalOpen(true);
+                            setSingleTechRequest(req);
+                          }}
+                        >
+                          View
+                        </button>
+
+                        {(req?.status === 'approved' ||
+                          req?.status === 'pending') && (
+                          <button
+                            className=" px-2 py-1 text-gray-100 dark:text-gray-200 bg-red-500 hover:bg-red-600 hover:cursor-pointer"
+                            onClick={handleRejected}
+                          >
+                            Rejected
+                          </button>
+                        )}
+
+                        {req?.status === 'pending' && (
+                          <button
+                            className=" px-2 py-1 text-gray-100 dark:text-gray-200 bg-green-700 hover:bg-green-800 hover:cursor-pointer"
+                            onClick={handleApproved}
+                          >
+                            Approved
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
           </table>
+
+          {/* view button for  modal */}
+          {isModalOpen && (
+            <TeacherRequestModal
+              setIsModalOpen={setIsModalOpen}
+              singleTechRequest={singleTechRequest}
+            />
+          )}
         </div>
       </div>
     </div>
