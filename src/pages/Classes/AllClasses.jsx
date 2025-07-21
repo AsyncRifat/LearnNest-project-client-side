@@ -35,20 +35,18 @@ const AllClasses = () => {
         </Marquee>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mx-auto">
-        {isLoading ? (
-          <SkeletonLoaderCard />
-        ) : (
-          <>
-            {approvedClasses.map(SingleClass => (
-              <AllApprovedClassesCard
-                key={SingleClass._id}
-                SingleClass={SingleClass}
-              />
-            ))}
-          </>
-        )}
-      </div>
+      {isLoading ? (
+        <SkeletonLoaderCard />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 ">
+          {approvedClasses.map(SingleClass => (
+            <AllApprovedClassesCard
+              key={SingleClass._id}
+              SingleClass={SingleClass}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };

@@ -55,23 +55,11 @@ const AddClass = () => {
   const onSubmit = async data => {
     setUploading(true);
 
-    // const classData = {
-    //   title: data.title,
-    //   name: user.displayName,
-    //   email: user.email,
-    //   price: parseFloat(data.price),
-    //   description: data.description,
-    //   image: imagePreview,
-    //   status: 'pending',
-    // };
-
-    // postData(classData);
-    // reset();
-
     try {
       const classData = {
         title: data.title,
         name: user.displayName,
+        teacherImage: user?.photoURL,
         email: user.email,
         price: parseFloat(data.price),
         description: data.description,

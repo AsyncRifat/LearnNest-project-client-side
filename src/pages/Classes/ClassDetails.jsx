@@ -3,16 +3,13 @@ import { FaStar } from 'react-icons/fa';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import useSkeleton from '../../hooks/useSkeleton';
 import ReviewSkeleton from '../shared/ReviewSkeleton';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { useParams } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import EmptyPage from '../../components/emptyPage/EmptyPage';
 
-const classInfo = {
-  title: 'MERN Stack Development',
-  instructor: 'Mr. Ibrahim Rifat',
-  email: 'ibrahim3rifat@gmail.com',
-  price: 209,
-  description: 'Learn MongoDB, Express, React, Node with real-world projects.',
-  image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-};
-
+// TODO: dynamic review section
 const reviews = [
   {
     id: 1,
@@ -69,6 +66,29 @@ const ClassDetailsWithToggleReview = () => {
   useDocumentTitle('LearnNest | Class Details');
   const loading = useSkeleton(3000);
   const [showReviews, setShowReviews] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+
+  const {
+    data: singleApprovedClass,
+    isLoading,
+    // refetch,
+    error,
+  } = useQuery({
+    queryKey: ['approvedClassDetails', id],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/approved-class-details/${id}`);
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  } else if (error) {
+    return <EmptyPage />;
+  }
+
+  const { image, title, name, email, price, description } = singleApprovedClass;
 
   return (
     <div
@@ -82,14 +102,14 @@ const ClassDetailsWithToggleReview = () => {
           } bg-white dark:bg-gray-800 shadow rounded-lg p-5 lg:sticky md:top-20  max-h-fit`}
         >
           <img
-            src={classInfo.image}
-            alt={classInfo.title}
+            src={image}
+            alt={title}
             className="w-full h-64 object-cover rounded-md mb-4"
           />
 
           <div className="flex justify-between items-center">
             <h1 className="font-quicksand text-2xl font-bold mb-3 text-center text-gray-800 dark:text-gray-200">
-              {classInfo.title}
+              {title}
             </h1>
 
             <button
@@ -104,17 +124,15 @@ const ClassDetailsWithToggleReview = () => {
           </div>
 
           <p className="mt-2 text-gray-600 dark:text-gray-300">
-            <strong>Instructor:</strong> {classInfo.instructor}
+            <strong>Instructor:</strong> {name}
           </p>
           <p className="text-gray-600 dark:text-gray-300">
-            <strong>Email:</strong> {classInfo.email}
+            <strong>Email:</strong> {email}
           </p>
           <p className="text-gray-600 dark:text-gray-300">
-            <strong>Price:</strong> ${classInfo.price}
+            <strong>Price:</strong> ${price}
           </p>
-          <p className="mt-4 text-gray-700 dark:text-gray-300">
-            {classInfo.description}
-          </p>
+          <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
 
           <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-6">
             Pay Now

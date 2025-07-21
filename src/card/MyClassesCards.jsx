@@ -3,8 +3,10 @@ import { Link } from 'react-router';
 import Swal from 'sweetalert2';
 
 const MyClassesCards = ({ singleClass }) => {
-  const { id, name, email, image, status, price, description, title } =
+  const { _id, name, email, image, status, price, description, title } =
     singleClass;
+
+  console.log(singleClass);
 
   const handleDelete = classId => {
     Swal.fire({
@@ -69,7 +71,7 @@ const MyClassesCards = ({ singleClass }) => {
           <button
             className="btn btn-outline btn-primary btn-sm"
             onClick={() => {
-              handleUpdate(id);
+              handleUpdate(_id);
             }}
           >
             Update
@@ -78,15 +80,15 @@ const MyClassesCards = ({ singleClass }) => {
           <button
             className="btn btn-outline btn-error btn-sm"
             onClick={() => {
-              handleDelete(id);
+              handleDelete(_id);
             }}
           >
             Delete
           </button>
 
-          {/* TODO: must be dynamic */}
+          {/* done: must be dynamic */}
           <Link
-            to={'/dashboard/my-class/1'} //`/dashboard/my-class/${id}`
+            to={`/dashboard/my-class/${_id}`}
             className={`btn btn-success btn-sm ${
               status !== 'approved'
                 ? 'hover:cursor-not-allowed opacity-40 pointer-events-none'

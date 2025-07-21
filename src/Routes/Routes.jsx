@@ -36,7 +36,7 @@ export const router = createBrowserRouter([
         Component: AllClasses,
       },
       {
-        path: 'classDetails/1', // TODO: dynamic path
+        path: 'classDetails/:id', // TODO: dynamic path
         element: (
           <PrivateRoute>
             <ClassDetails />
@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
         element: <MyClass />,
       },
       {
-        path: 'my-class/1', // TODO: dynamic path
+        path: 'my-class/:id',
         element: <MyClassDetails />,
       },
       // student panel
