@@ -1,12 +1,30 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyClassesCards = ({ singleClass }) => {
   const { _id, name, email, image, status, price, description, title } =
     singleClass;
+  const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
 
-  const handleDelete = classId => {
+  const { mutate: deleteData } = useMutation({
+    mutationFn: async id => {
+      const res = await axiosSecure.delete(`/my-class-delete/${id}`);
+      return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['teacherRequest'] });
+      Swal.fire('Deleted!', 'The class has been deleted.', 'success');
+    },
+    onError: error => {
+      Swal.fire('Error!', error?.message || 'Something went wrong.', 'error');
+    },
+  });
+
+  const handleDelete = id => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this class!',
@@ -18,10 +36,7 @@ const MyClassesCards = ({ singleClass }) => {
       cancelButtonText: 'Cancel',
     }).then(result => {
       if (result.isConfirmed) {
-        console.log(`Deleted class with id: ${classId}`);
-
-        // Optional success alert
-        Swal.fire('Deleted!', 'The class has been deleted.', 'success');
+        deleteData(id);
       }
     });
   };
