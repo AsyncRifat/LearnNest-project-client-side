@@ -4,6 +4,7 @@ import useDocumentTitle from '../../../utils/useDocumentTitle';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import useAuth from '../../../hooks/useAuth';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const MyClass = () => {
   useDocumentTitle('LearnNest | My classes');
@@ -19,12 +20,9 @@ const MyClass = () => {
     queryFn: async () => {
       const res = await axiosSecure(`/get-all-classes/${user?.email}`);
       const data = res.data;
-      // setSkeletonCount(data.length);
       return data;
     },
   });
-
-  console.log(allClassInfo);
 
   return (
     <div>
@@ -37,7 +35,7 @@ const MyClass = () => {
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ">
         {isLoading ? (
-          ''
+          <LoadingSpinner />
         ) : (
           <>
             {allClassInfo.map(singleClass => (

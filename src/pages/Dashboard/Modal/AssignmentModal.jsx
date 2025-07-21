@@ -1,8 +1,21 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import Button from '../../shared/Button';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router';
+import { usePostData } from '../../../utils/utils';
+import toast from 'react-hot-toast';
 
 const AssignmentModal = ({ isOpen, setIsOpen }) => {
+  const { id } = useParams();
+
+  const { mutate: postData } = usePostData({
+    endpoint: '/add-assignment',
+    onSuccess: () => {
+      toast.success('Assignment successfully');
+    },
+    onError: () => toast.error('Not send class data'),
+  });
+
   const {
     register,
     handleSubmit,
@@ -11,9 +24,19 @@ const AssignmentModal = ({ isOpen, setIsOpen }) => {
   } = useForm();
 
   const onSubmit = data => {
-    reset();
-    console.log(data);
-    setIsOpen(false);
+    try {
+      const assignmentData = {
+        classId: id,
+        assignmentTitle: data?.title,
+        assignmentDateline: data?.dateline,
+        assignmentDescription: data?.description,
+      };
+      postData(assignmentData);
+      reset();
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   return (
@@ -53,12 +76,21 @@ const AssignmentModal = ({ isOpen, setIsOpen }) => {
                 {errors.title.message}
               </p>
             )}
+
             <textarea
+              {...register('description', {
+                required: 'Description is required',
+              })}
               name="description"
               placeholder="Assignment Description"
               className="w-full textarea textarea-bordered rounded-lg border focus:ring-2 focus:ring-green-500 bg-gray-300 dark:bg-gray-800 dark:text-white border-gray-300 text-black"
               rows="4"
-            ></textarea>
+            />
+            {errors.description && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.description.message}
+              </p>
+            )}
 
             <div className="mt-6 flex justify-end gap-2">
               <button
