@@ -6,8 +6,6 @@ const MyClassesCards = ({ singleClass }) => {
   const { _id, name, email, image, status, price, description, title } =
     singleClass;
 
-  console.log(singleClass);
-
   const handleDelete = classId => {
     Swal.fire({
       title: 'Are you sure?',

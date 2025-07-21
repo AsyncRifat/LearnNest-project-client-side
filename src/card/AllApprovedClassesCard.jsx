@@ -47,6 +47,7 @@ const AllApprovedClassesCard = ({ SingleClass }) => {
         <hr className="text-gray-200 my-2" />
 
         <div className="space-y-3">
+          <h2 className="font-semibold">{title}</h2>
           <div className="font-light mt-3 mb-1 h-24">
             {description.length > 100 && !showFullDesc ? (
               <div>
