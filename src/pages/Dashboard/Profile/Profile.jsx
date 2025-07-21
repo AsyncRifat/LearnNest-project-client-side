@@ -1,9 +1,15 @@
 import useAuth from '../../../hooks/useAuth';
+import useUserRole from '../../../hooks/useUserRole';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const Profile = () => {
   const { user } = useAuth();
   useDocumentTitle(`Profile on ${user?.displayName}`);
+  const [role, isRoleLoading] = useUserRole();
+  if (isRoleLoading) {
+    return <LoadingSpinner />;
+  }
 
   console.log(user);
   return (
@@ -24,7 +30,7 @@ const Profile = () => {
           </div>
 
           <p className="p-2 px-4 text-xs text-white bg-lime-500 rounded-full">
-            {/* {role.toUpperCase()} */} Student
+            {role.toUpperCase()}
           </p>
           <p className="mt-2 text-xl font-medium text-gray-800 ">
             User Id: {user?.uid}

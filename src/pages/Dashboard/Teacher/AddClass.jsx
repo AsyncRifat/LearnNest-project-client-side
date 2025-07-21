@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../../hooks/useAuth';
 import Button from '../../shared/Button';
-import { imageUpload } from '../../../utils/utils';
+import { imageUpload, usePostData } from '../../../utils/utils';
 import useSkeleton from '../../../hooks/useSkeleton';
-import SkeletonLoader from '../../shared/SkeletonLoader';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import SkeletonLoaderAddClass from '../../shared/SkeletonLoaderAddClass';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 const AddClass = () => {
   useDocumentTitle('LearnNest | Add Class');
@@ -15,11 +17,12 @@ const AddClass = () => {
   const [uploading, setUploading] = useState(false);
   const loading = useSkeleton(1000);
   const [imageFileName, setImageFileName] = useState('');
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -38,9 +41,33 @@ const AddClass = () => {
     }
   };
 
+  const { mutate: postData } = usePostData({
+    endpoint: '/add-class',
+    onSuccess: () => {
+      toast.success('Added successfully. Waiting for approve!');
+      setUploading(false);
+      navigate('/dashboard/my-class');
+    },
+    onError: () => toast.error('Not send class data'),
+  });
+
   // form data without image
   const onSubmit = async data => {
     setUploading(true);
+
+    // const classData = {
+    //   title: data.title,
+    //   name: user.displayName,
+    //   email: user.email,
+    //   price: parseFloat(data.price),
+    //   description: data.description,
+    //   image: imagePreview,
+    //   status: 'pending',
+    // };
+
+    // postData(classData);
+    // reset();
+
     try {
       const classData = {
         title: data.title,
@@ -52,24 +79,18 @@ const AddClass = () => {
         status: 'pending',
       };
 
-      console.log(classData);
-
-      // Send to your backend
-      // await axios.post('https://your-backend.com/classes', classData);
-      // reset();
-      // setImagePreview(null);
-      // navigate('/dashboard/my-classes');
+      postData(classData);
     } catch (error) {
       console.error(error.message);
     } finally {
-      setUploading(false);
+      reset();
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
-        <SkeletonLoader />
+      <div className="pt-2">
+        <SkeletonLoaderAddClass />
       </div>
     );
   }
@@ -119,7 +140,7 @@ const AddClass = () => {
                 step="0.01"
                 {...register('price', { required: 'Price is required' })}
                 className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-green-500 bg-white dark:bg-gray-800 dark:text-white border-gray-300 text-black"
-                placeholder="99"
+                placeholder="Enter your course price"
               />
               {errors.price && (
                 <p className="text-red-500 text-sm mt-1">

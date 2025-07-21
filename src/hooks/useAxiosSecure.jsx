@@ -25,24 +25,26 @@ const useAxiosSecure = () => {
   );
 
   // Add a response interceptor
-  axiosSecure.interceptors.response.use(response => {
-    return response;
-  });
-  error => {
-    if (error.status === 403) {
-      navigate('/forbidden');
-    } else if (error.status === 401) {
-      logOut()
-        .then(() => {
-          console.log(`sign out user for ${error.status} status code`);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+  axiosSecure.interceptors.response.use(
+    response => {
+      return response;
+    },
+    error => {
+      const status = error.response?.status;
+      if (status === 403) {
+        navigate('/forbidden');
+      } else if (status === 401) {
+        logOut()
+          .then(() => {
+            console.log(`sign out user for ${error.status} status code`);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  };
-
+  );
   return axiosSecure;
 };
 

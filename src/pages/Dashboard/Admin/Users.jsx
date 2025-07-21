@@ -5,12 +5,14 @@ import useSkeleton from '../../../hooks/useSkeleton';
 import LoadingSpinner from '../../shared/LoadingSpinner';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import SkeletonLoader from '../../shared/SkeletonLoader';
 
 const Users = () => {
   useDocumentTitle('LearnNest | Make Admin');
   const loading = useSkeleton(400);
   const [searchEmail, setSearchEmail] = useState('');
   const [emailQuery, setEmailQuery] = useState('');
+  const [skeletonCount, setSkeletonCount] = useState(3);
   const axiosSecure = useAxiosSecure();
 
   // Query to search users
@@ -24,7 +26,9 @@ const Users = () => {
       const res = await axiosSecure(
         emailQuery ? `/users/search?email=${emailQuery}` : `/users/search`
       );
-      return res.data;
+      const data = res.data;
+      setSkeletonCount(data.length);
+      return data;
     },
   });
 
@@ -123,11 +127,9 @@ const Users = () => {
               </thead>
               {isLoading ? (
                 <tbody>
-                  <tr>
-                    <td className="flex justify-center items-center">
-                      <span className="loading loading-dots loading-xs"></span>
-                    </td>
-                  </tr>
+                  {[...Array(skeletonCount)].map((_, i) => (
+                    <SkeletonLoader key={i} />
+                  ))}
                 </tbody>
               ) : (
                 <tbody>
