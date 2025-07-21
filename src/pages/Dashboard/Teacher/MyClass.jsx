@@ -1,41 +1,30 @@
 import React from 'react';
 import MyClassesCards from '../../../card/MyClassesCards';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useAuth from '../../../hooks/useAuth';
 
 const MyClass = () => {
   useDocumentTitle('LearnNest | My classes');
-  const classInfo = [
-    {
-      id: 1,
-      title: 'MERN course',
-      name: 'Mr. Ibrahim Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      price: 209,
-      description: 'Its Web development course, mern stack full course ',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-      status: 'rejected',
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
+  const {
+    data: allClassInfo = [],
+    isLoading,
+    // refetch,
+  } = useQuery({
+    queryKey: ['teacherRequest'],
+    queryFn: async () => {
+      const res = await axiosSecure(`/get-all-classes/${user?.email}`);
+      const data = res.data;
+      // setSkeletonCount(data.length);
+      return data;
     },
-    {
-      id: 2,
-      title: 'MERN course',
-      name: 'Mr. Ibrahim Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      price: 100,
-      description: 'Its Web development course, mern stack full course ',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-      status: 'approved',
-    },
-    {
-      id: 3,
-      title: 'MERN course',
-      name: 'Mr. Ibrahim Rifat',
-      email: 'ibrahim3rifat@gmail.com',
-      price: 209,
-      description: 'Its Web development course, mern stack full course ',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-      status: 'pending',
-    },
-  ];
+  });
+
+  console.log(allClassInfo);
 
   return (
     <div>
@@ -46,10 +35,16 @@ const MyClass = () => {
         Manage all your submitted classes in one place. Update, delete, or view
         details after admin approval.
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {classInfo.map(singleClass => (
-          <MyClassesCards key={singleClass.id} singleClass={singleClass} />
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ">
+        {isLoading ? (
+          ''
+        ) : (
+          <>
+            {allClassInfo.map(singleClass => (
+              <MyClassesCards key={singleClass._id} singleClass={singleClass} />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

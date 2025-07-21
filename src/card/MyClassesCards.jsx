@@ -31,8 +31,8 @@ const MyClassesCards = ({ singleClass }) => {
   };
 
   return (
-    <div className="card w-full shadow-2xl rounded-t-sm">
-      <figure className="h-48 overflow-hidden">
+    <div className="card w-full shadow-2xl rounded-t-sm group">
+      <figure className="h-48 overflow-hidden group-hover:scale-105 transition-transform duration-600">
         <img
           src={image}
           alt={title}
@@ -40,7 +40,7 @@ const MyClassesCards = ({ singleClass }) => {
         />
       </figure>
 
-      <div className="card-body bg-white">
+      <div className="card-body bg-white group-hover:scale-105 transition-transform duration-600">
         <h2 className="card-title text-xl font-bold text-gray-800 ">{title}</h2>
 
         <p className="text-sm text-gray-600">
@@ -53,7 +53,8 @@ const MyClassesCards = ({ singleClass }) => {
           <strong>Price:</strong> ${price}
         </p>
         <p className="text-sm text-gray-700">
-          <strong>Description:</strong> {description.slice(0, 100)}...
+          <strong>Description:</strong>{' '}
+          {description ? description.slice(0, 100) + '...' : 'N/A'}
         </p>
         <p
           className={`text-sm font-medium ${

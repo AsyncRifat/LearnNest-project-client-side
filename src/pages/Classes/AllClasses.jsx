@@ -1,37 +1,21 @@
 import Marquee from 'react-fast-marquee';
 import AllApprovedClassesCard from '../../card/AllApprovedClassesCard';
 import useDocumentTitle from '../../utils/useDocumentTitle';
-import useSkeleton from '../../hooks/useSkeleton';
 import SkeletonLoaderCard from '../shared/SkeletonLoaderCard';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const AllClasses = () => {
   useDocumentTitle('LearnNest | All Classes');
-  const loading = useSkeleton();
+  const axiosSecure = useAxiosSecure();
 
-  const allApprovedClasses = [
-    {
-      id: '1',
-      title: 'React Basics',
-      name: 'John Doe',
-      status: 'approved',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
+  const { data: approvedClasses = [], isLoading } = useQuery({
+    queryKey: ['approvedClasses'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/approved-classes');
+      return res.data;
     },
-    {
-      id: '2',
-      title: 'Advanced JavaScript',
-      name: 'Jane Smith',
-      status: 'approved',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-    },
-  ];
-
-  if (loading) {
-    return (
-      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
-        <SkeletonLoaderCard />
-      </div>
-    );
-  }
+  });
 
   return (
     <>
@@ -51,13 +35,19 @@ const AllClasses = () => {
         </Marquee>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3">
-        {allApprovedClasses.map(SingleClass => (
-          <AllApprovedClassesCard
-            key={SingleClass.id}
-            SingleClass={SingleClass}
-          />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mx-auto">
+        {isLoading ? (
+          <SkeletonLoaderCard />
+        ) : (
+          <>
+            {approvedClasses.map(SingleClass => (
+              <AllApprovedClassesCard
+                key={SingleClass._id}
+                SingleClass={SingleClass}
+              />
+            ))}
+          </>
+        )}
       </div>
     </>
   );
