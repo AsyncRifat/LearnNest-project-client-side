@@ -69,6 +69,7 @@ const UpdateClass = () => {
         description: data.description,
         image: imagePreview,
         status: 'pending',
+        enrolled: 0,
       };
       console.log(updatedClass);
 

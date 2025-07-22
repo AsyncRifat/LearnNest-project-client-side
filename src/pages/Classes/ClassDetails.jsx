@@ -8,6 +8,7 @@ import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../shared/LoadingSpinner';
 import EmptyPage from '../../components/emptyPage/EmptyPage';
+import PurchaseModal from '../Dashboard/Modal/PurchaseModal';
 
 // TODO: dynamic review section
 const reviews = [
@@ -68,11 +69,12 @@ const ClassDetailsWithToggleReview = () => {
   const [showReviews, setShowReviews] = useState(false);
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     data: singleApprovedClass,
     isLoading,
-    // refetch,
+    refetch,
     error,
   } = useQuery({
     queryKey: ['approvedClassDetails', id],
@@ -89,6 +91,10 @@ const ClassDetailsWithToggleReview = () => {
   }
 
   const { image, title, name, email, price, description } = singleApprovedClass;
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <div
@@ -134,9 +140,19 @@ const ClassDetailsWithToggleReview = () => {
           </p>
           <p className="mt-4 text-gray-700 dark:text-gray-300">{description}</p>
 
-          <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-6">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-6"
+          >
             Pay Now
           </button>
+
+          <PurchaseModal
+            closeModal={closeModal}
+            isOpen={isOpen}
+            singleApprovedClass={singleApprovedClass}
+            refetch={refetch}
+          />
         </div>
 
         {/* Right: Reviews */}

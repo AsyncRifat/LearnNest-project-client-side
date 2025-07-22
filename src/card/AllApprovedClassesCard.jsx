@@ -3,8 +3,16 @@ import { FaDollarSign, FaUserGraduate } from 'react-icons/fa';
 import { Link } from 'react-router';
 
 const AllApprovedClassesCard = ({ SingleClass }) => {
-  const { _id, image, name, price, description, title, teacherImage } =
-    SingleClass;
+  const {
+    _id,
+    image,
+    name,
+    price,
+    description,
+    title,
+    teacherImage,
+    enrolled,
+  } = SingleClass;
 
   const [showFullDesc, setShowFullDesc] = useState(false);
   // const description = '';
@@ -40,7 +48,7 @@ const AllApprovedClassesCard = ({ SingleClass }) => {
           {/* TODO: total enrolled dynamic */}
           <p className="flex items-center gap-2 text-gray-700">
             <FaUserGraduate className="text-violet-600" />
-            Total Enroll: 2782+
+            Total Enroll: {enrolled} <span className="font-semibold">+</span>
           </p>
         </div>
 

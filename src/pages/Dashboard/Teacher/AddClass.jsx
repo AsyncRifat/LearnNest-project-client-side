@@ -64,6 +64,7 @@ const AddClass = () => {
         description: data.description,
         image: imagePreview,
         status: 'pending',
+        enrolled: 0,
       };
 
       postData(classData);
