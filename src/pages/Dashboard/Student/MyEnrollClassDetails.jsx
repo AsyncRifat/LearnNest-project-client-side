@@ -11,6 +11,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useParams } from 'react-router';
 import LoadingSpinner from '../../shared/LoadingSpinner';
+import { usePostData } from '../../../utils/utils';
+import toast from 'react-hot-toast';
+import useAuth from '../../../hooks/useAuth';
 
 const MyEnrollClassDetails = () => {
   const [isTERModalOpen, setIsTERModalOpen] = useState(false);
@@ -19,6 +22,7 @@ const MyEnrollClassDetails = () => {
   const [terDescription, setTerDescription] = useState('');
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  const { user } = useAuth();
 
   const { data: totalAssignment = [], isLoading } = useQuery({
     queryKey: ['myEnrollClass'],
@@ -28,7 +32,19 @@ const MyEnrollClassDetails = () => {
       return data;
     },
   });
-  console.log(totalAssignment);
+
+  const teacherEmail = totalAssignment[0]?.teacherEmail;
+  const sirName = totalAssignment[0]?.teacherName;
+  // console.log(totalAssignment);
+
+  const { mutate: postData } = usePostData({
+    endpoint: '/ter-review',
+    onSuccess: () => {
+      toast.success('Thanks for your report');
+      setIsTERModalOpen(false);
+    },
+    onError: () => toast.error('Not send TER data'),
+  });
 
   const handleSubmitAssignment = id => {
     console.log('Assignment submitted:', id);
@@ -36,7 +52,16 @@ const MyEnrollClassDetails = () => {
   };
 
   const handleTERSubmit = () => {
-    console.log('TER submitted:', { rating, terDescription });
+    const teacherReportData = {
+      name: user?.displayName,
+      image: user?.photoURL,
+      rating: rating,
+      comment: terDescription,
+      teacherMail: teacherEmail,
+      teacherName: sirName,
+    };
+
+    postData(teacherReportData);
     setIsTERModalOpen(false);
   };
 
@@ -226,3 +251,6 @@ const MyEnrollClassDetails = () => {
 };
 
 export default MyEnrollClassDetails;
+
+// const teacherEmail = totalAssignment.teacherEmail;
+// const sirName = totalAssignment.teacherName;

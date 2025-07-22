@@ -4,10 +4,26 @@ import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router';
 import { usePostData } from '../../../utils/utils';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const AssignmentModal = ({ isOpen, setIsOpen }) => {
   const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
 
+  // get assignment's class
+  const { data: singleClassInfo = [] } = useQuery({
+    queryKey: ['singleClass'],
+    queryFn: async () => {
+      const res = await axiosSecure(`/get-class-for-assignment/${id}`);
+      const data = res.data;
+      return data;
+    },
+  });
+  const teacherMail = singleClassInfo.email;
+  const teacherName = singleClassInfo.name;
+
+  // assignment add
   const { mutate: postData } = usePostData({
     endpoint: '/add-assignment',
     onSuccess: () => {
@@ -30,6 +46,8 @@ const AssignmentModal = ({ isOpen, setIsOpen }) => {
         assignmentTitle: data?.title,
         assignmentDateline: data?.dateline,
         assignmentDescription: data?.description,
+        teacherEmail: teacherMail,
+        teacherName: teacherName,
       };
       postData(assignmentData);
       reset();

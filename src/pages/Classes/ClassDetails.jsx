@@ -10,60 +10,7 @@ import LoadingSpinner from '../shared/LoadingSpinner';
 import EmptyPage from '../../components/emptyPage/EmptyPage';
 import PurchaseModal from '../Dashboard/Modal/PurchaseModal';
 import useAuth from '../../hooks/useAuth';
-import useUserRole from '../../hooks/useUserRole';
-
-// TODO: dynamic review section
-const reviews = [
-  {
-    id: 1,
-    name: 'Rahim Uddin',
-    rating: 5,
-    comment: 'Amazing course! Highly recommend.',
-    date: 'July 18, 2025',
-  },
-  {
-    id: 2,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-  {
-    id: 3,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-  {
-    id: 4,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-  {
-    id: 5,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-  {
-    id: 6,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-  {
-    id: 7,
-    name: 'Fatema Khatun',
-    rating: 4,
-    comment: 'Instructor was clear and helpful.',
-    date: 'July 15, 2025',
-  },
-];
+import { useEffect } from 'react';
 
 const ClassDetailsWithToggleReview = () => {
   useDocumentTitle('LearnNest | Class Details');
@@ -73,7 +20,7 @@ const ClassDetailsWithToggleReview = () => {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
-  const [role, isRoleLoading] = useUserRole();
+  const [sirEmail, setSirEmail] = useState('');
 
   const {
     data: singleApprovedClass,
@@ -88,7 +35,24 @@ const ClassDetailsWithToggleReview = () => {
     },
   });
 
-  if (isLoading || isRoleLoading) {
+  useEffect(() => {
+    if (singleApprovedClass?.email) {
+      setSirEmail(singleApprovedClass.email);
+    }
+  }, [singleApprovedClass]);
+  console.log(sirEmail);
+
+  const { data: terReport } = useQuery({
+    queryKey: ['terReport', sirEmail],
+    enabled: !!sirEmail,
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/get-ter-report/${sirEmail}`);
+      return data;
+    },
+  });
+  console.log(terReport);
+
+  if (isLoading) {
     return <LoadingSpinner />;
   } else if (error) {
     return <EmptyPage />;
@@ -169,15 +133,19 @@ const ClassDetailsWithToggleReview = () => {
         {showReviews && (
           <div className="w-full lg:w-1/3 bg-white shadow rounded-lg p-2 h-fit dark:bg-gray-800">
             <h2 className="font-quicksand text-2xl font-bold mb-3 text-start text-gray-800 dark:text-gray-200">
-              Reviews ({reviews.length})
+              Reviews ({terReport.length})
             </h2>
             <div className="space-y-4">
               {loading ? (
                 <ReviewSkeleton />
+              ) : terReport.length === 0 ? (
+                <p className="text-gray-500 text-center">
+                  Not available any review
+                </p>
               ) : (
-                reviews.map(review => (
+                terReport.map(review => (
                   <div
-                    key={review.id}
+                    key={review._id}
                     className="border p-3 rounded bg-gray-50 dark:bg-gray-700 dark:border-gray-500"
                   >
                     <div className="flex justify-between ">
