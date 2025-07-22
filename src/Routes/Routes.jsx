@@ -20,6 +20,7 @@ import Forbidden from '../pages/Forbidden/Forbidden';
 import ClassDetails from '../pages/Classes/ClassDetails';
 import MyClassDetails from '../pages/Dashboard/Teacher/MyClassDetails';
 import MyEnrollClassDetails from '../pages/Dashboard/Student/MyEnrollClassDetails';
+import UpdateClass from '../pages/Dashboard/Teacher/UpdateClass';
 
 export const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-class',
         element: <MyClass />,
+      },
+      {
+        path: 'update-my-class/:id',
+        element: <UpdateClass />,
       },
       {
         path: 'my-class/:id',

@@ -53,7 +53,6 @@ export const usePatchData = ({ endpoint, queryKey, onSuccess, onError }) => {
       return res.data;
     },
     onSuccess: (data, variables, context) => {
-      console.log('Mutation success called!');
       if (queryKey) {
         queryClient.invalidateQueries({ queryKey: [queryKey] });
       }

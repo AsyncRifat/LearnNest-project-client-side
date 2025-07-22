@@ -122,6 +122,7 @@ const TeachOnPage = () => {
                 <option value="ai-machine-learning">
                   AI & Machine Learning
                 </option>
+                <option value="ai-machine-learning">General</option>
               </select>
               {errors.category && (
                 <p className="text-red-500 text-xs mt-1">Required</p>

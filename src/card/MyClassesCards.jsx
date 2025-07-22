@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../hooks/useAxiosSecure';
 
@@ -9,6 +9,7 @@ const MyClassesCards = ({ singleClass }) => {
     singleClass;
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutate: deleteData } = useMutation({
     mutationFn: async id => {
@@ -39,10 +40,6 @@ const MyClassesCards = ({ singleClass }) => {
         deleteData(id);
       }
     });
-  };
-
-  const handleUpdate = id => {
-    console.log(id);
   };
 
   return (
@@ -83,9 +80,7 @@ const MyClassesCards = ({ singleClass }) => {
         <div className="card-actions justify-between mt-4">
           <button
             className="btn btn-outline btn-primary btn-sm"
-            onClick={() => {
-              handleUpdate(_id);
-            }}
+            onClick={() => navigate(`/dashboard/update-my-class/${_id}`)}
           >
             Update
           </button>
