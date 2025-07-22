@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Button from '../pages/shared/Button';
 
 const MyEnrollClassCard = ({ enrolledClass }) => {
-  const { title, name, image } = enrolledClass;
+  const { courseTitle, teacher, image, courseId } = enrolledClass;
 
   if (!enrolledClass || enrolledClass.length === 0) {
     return (
@@ -20,7 +20,7 @@ const MyEnrollClassCard = ({ enrolledClass }) => {
       <figure className="h-48 overflow-hidden">
         <img
           src={image}
-          alt={title}
+          alt={courseTitle}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
       </figure>
@@ -28,24 +28,21 @@ const MyEnrollClassCard = ({ enrolledClass }) => {
       <div className="card-body flex flex-col flex-grow">
         {/* Title */}
         <h2 className="card-title text-lg font-semibold text-gray-900 dark:text-gray-100">
-          {title}
+          {courseTitle}
         </h2>
 
         <div className="flex justify-between items-center">
           {/* Instructor Name */}
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-            By: {name}
+            By: {teacher}
           </p>
           <Link
             className="bg-green-600 hover:bg-green-700 rounded-md text-sm text-center py-1.5 px-3 mx-auto justify-end"
-            to={'/dashboard/myEnroll-class/1'}
+            to={`/dashboard/myEnroll-class/${courseId}`}
           >
             Continue
           </Link>
         </div>
-
-        {/* Continue Button */}
-        {/* <Button label={'Continue'} small={true} /> */}
       </div>
     </div>
   );

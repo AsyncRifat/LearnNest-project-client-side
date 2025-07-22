@@ -125,7 +125,7 @@ export const router = createBrowserRouter([
         element: <MyEnrollClass />,
       },
       {
-        path: 'myEnroll-class/1', // TODO: dynamic path
+        path: 'myEnroll-class/:id',
         element: <MyEnrollClassDetails />,
       },
       // common

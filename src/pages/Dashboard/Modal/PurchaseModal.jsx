@@ -14,8 +14,17 @@ const PurchaseModal = ({
   singleApprovedClass,
   refetch,
 }) => {
-  const { _id, title, name, email, price, status, enrolled, teacherImage } =
-    singleApprovedClass;
+  const {
+    _id,
+    title,
+    name,
+    email,
+    price,
+    status,
+    enrolled,
+    teacherImage,
+    image,
+  } = singleApprovedClass;
 
   const courseData = {
     teacher: name,
@@ -26,6 +35,7 @@ const PurchaseModal = ({
     courseStatus: status,
     courseEnrolled: enrolled,
     teacherImage: teacherImage,
+    image: image,
   };
 
   return (

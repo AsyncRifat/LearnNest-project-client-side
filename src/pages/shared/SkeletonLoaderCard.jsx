@@ -2,7 +2,7 @@ import React from 'react';
 
 const SkeletonLoaderCard = () => {
   return (
-    <div className="mx-auto max-h-screen max-w-2xl card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden animate-pulse">
+    <div className="mx-auto max-h-screen max-w-xl md:py-10 md:mb-16 card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden animate-pulse">
       {/* Image placeholder */}
       <div className="h-48 w-full bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700" />
 

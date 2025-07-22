@@ -9,6 +9,8 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../shared/LoadingSpinner';
 import EmptyPage from '../../components/emptyPage/EmptyPage';
 import PurchaseModal from '../Dashboard/Modal/PurchaseModal';
+import useAuth from '../../hooks/useAuth';
+import useUserRole from '../../hooks/useUserRole';
 
 // TODO: dynamic review section
 const reviews = [
@@ -70,6 +72,8 @@ const ClassDetailsWithToggleReview = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const [role, isRoleLoading] = useUserRole();
 
   const {
     data: singleApprovedClass,
@@ -84,7 +88,7 @@ const ClassDetailsWithToggleReview = () => {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || isRoleLoading) {
     return <LoadingSpinner />;
   } else if (error) {
     return <EmptyPage />;
@@ -142,9 +146,15 @@ const ClassDetailsWithToggleReview = () => {
 
           <button
             onClick={() => setIsOpen(true)}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-6"
+            disabled={!user || user?.email === email}
+            className={`bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mt-6 ${
+              user?.email === email && 'disabled:cursor-not-allowed'
+            }`}
+            title={`${
+              user?.email === email ? 'It is Your course' : 'Enroll Now'
+            }`}
           >
-            Pay Now
+            <p>{user ? 'Pay Now' : 'Login to Enroll'}</p>
           </button>
 
           <PurchaseModal

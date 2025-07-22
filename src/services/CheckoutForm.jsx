@@ -69,6 +69,7 @@ const CheckoutForm = ({ totalPrice, courseData, closeModal, refetch }) => {
           try {
             // enroll data save in database
             courseData.transactionId = transactionId;
+            courseData.studentEmail = user?.email;
             const { data } = await axiosSecure.post('/enroll-info', courseData);
             if (data.insertedId) {
               toast.success('Payment Info Saved');

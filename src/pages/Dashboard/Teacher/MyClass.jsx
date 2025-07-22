@@ -11,11 +11,7 @@ const MyClass = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
-  const {
-    data: allClassInfo = [],
-    isLoading,
-    // refetch,
-  } = useQuery({
+  const { data: allClassInfo = [], isLoading } = useQuery({
     queryKey: ['teacherRequest'],
     queryFn: async () => {
       const res = await axiosSecure(`/get-all-classes/${user?.email}`);

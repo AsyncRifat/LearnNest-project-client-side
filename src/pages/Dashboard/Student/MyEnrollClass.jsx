@@ -2,30 +2,30 @@ import React from 'react';
 import MyEnrollClassCard from '../../../card/MyEnrollClassCard';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
 import useSkeleton from '../../../hooks/useSkeleton';
-import SkeletonLoaderCard from '../../shared/SkeletonLoaderCard';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../../hooks/useAuth';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const MyEnrollClass = () => {
   useDocumentTitle('LearnNest | My Enrolled Classes');
-  const loading = useSkeleton();
-  const enrolledClassesData = [
-    {
-      id: '1',
-      title: 'React Basics',
-      name: 'John Doe',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-    },
-    {
-      id: '2',
-      title: 'Advanced JavaScript',
-      name: 'Jane Smith',
-      image: 'https://i.ibb.co/Zp6x2DVF/Screenshot-2025-07-17-at-18-13-38.png',
-    },
-  ];
+  const loading = useSkeleton(700);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-  if (loading) {
+  const { data: myEnrolledClasses = [], isLoading } = useQuery({
+    queryKey: ['myEnrollClass', user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure(`/my-all-classes/${user?.email}`);
+      const data = res.data;
+      return data;
+    },
+  });
+
+  if (loading || isLoading) {
     return (
       <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
-        <SkeletonLoaderCard />
+        <LoadingSpinner />
       </div>
     );
   }
@@ -44,9 +44,9 @@ const MyEnrollClass = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-5">
-        {enrolledClassesData.map(enrolledClass => (
+        {myEnrolledClasses.map(enrolledClass => (
           <MyEnrollClassCard
-            key={enrolledClass.id}
+            key={enrolledClass._id}
             enrolledClass={enrolledClass}
           />
         ))}

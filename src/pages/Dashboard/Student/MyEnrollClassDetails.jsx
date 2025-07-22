@@ -7,49 +7,46 @@ import {
   Transition,
 } from '@headlessui/react';
 import { Fragment } from 'react';
-
-const assignments = [
-  {
-    id: 1,
-    title: 'Assignment 1',
-    description: 'Build a responsive React website.',
-    deadline: '2025-08-01',
-  },
-  {
-    id: 2,
-    title: 'Assignment 2',
-    description: 'Create a REST API using Node.js and Express.',
-    deadline: '2025-08-10',
-  },
-  {
-    id: 3,
-    title: 'Assignment 2',
-    description: 'Create a REST API using Node.js and Express.',
-    deadline: '2025-08-10',
-  },
-  {
-    id: 4,
-    title: 'Assignment 2',
-    description: 'Create a REST API using Node.js and Express.',
-    deadline: '2025-08-10',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useParams } from 'react-router';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const MyEnrollClassDetails = () => {
   const [isTERModalOpen, setIsTERModalOpen] = useState(false);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(null);
   const [terDescription, setTerDescription] = useState('');
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+
+  const { data: totalAssignment = [], isLoading } = useQuery({
+    queryKey: ['myEnrollClass'],
+    queryFn: async () => {
+      const res = await axiosSecure(`/assignment-get/${id}`);
+      const data = res.data;
+      return data;
+    },
+  });
+  console.log(totalAssignment);
 
   const handleSubmitAssignment = id => {
     console.log('Assignment submitted:', id);
-    // Make API call here
+    // TODO: dynamic (optional)
   };
 
   const handleTERSubmit = () => {
     console.log('TER submitted:', { rating, terDescription });
     setIsTERModalOpen(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen py-10 px-4 flex items-center justify-center  dark:bg-base-100">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto p-4">
@@ -96,43 +93,51 @@ const MyEnrollClassDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {assignments.map(assignment => (
-              <tr
-                key={assignment.id}
-                className="text-gray-800 border-b border-gray-200"
-              >
-                <td className="px-5 py-5 bg-white text-sm">
-                  <p className="text-gray-900 whitespace-no-wrap">
-                    {assignment.title}
-                  </p>
-                </td>
-
-                <td className="px-5 py-5 bg-white text-sm">
-                  <p className="text-gray-900 whitespace-no-wrap truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px]">
-                    {assignment.description}
-                  </p>
-                </td>
-
-                <td className="px-5 py-5 bg-white text-sm">
-                  <p className="text-gray-900 whitespace-no-wrap">
-                    {assignment.deadline}
-                  </p>
-                </td>
-
-                <td className="flex justify-center items-center px-5 py-5 bg-white text-sm space-x-2.5">
-                  <input
-                    type="file"
-                    className=" py-1.5 px-3 rounded-sm bg-gray-200 text-gray-800 cursor-pointer"
-                  />
-                  <button
-                    onClick={() => handleSubmitAssignment(assignment.id)}
-                    className="py-1.5 px-3 rounded-sm bg-violet-500 text-white cursor-pointer"
-                  >
-                    Submit
-                  </button>
+            {totalAssignment.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="4"
+                  className="text-center text-gray-500 py-6 bg-white text-sm"
+                >
+                  Not available assignment
                 </td>
               </tr>
-            ))}
+            ) : (
+              totalAssignment.map(assignment => (
+                <tr
+                  key={assignment._id}
+                  className="text-gray-800 border-b border-gray-200"
+                >
+                  <td className="px-5 py-5 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">
+                      {assignment.assignmentTitle}
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 bg-white text-sm">
+                    <p className="text-gray-900 truncate max-w-[140px]">
+                      {assignment.assignmentDescription}
+                    </p>
+                  </td>
+                  <td className="px-5 py-5 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">
+                      {assignment.assignmentDateline}
+                    </p>
+                  </td>
+                  <td className="flex justify-center items-center px-5 py-5 bg-white text-sm space-x-2.5">
+                    <input
+                      type="file"
+                      className="py-1.5 px-3 rounded-sm bg-gray-200 text-gray-800 cursor-pointer"
+                    />
+                    <button
+                      onClick={() => handleSubmitAssignment(assignment._id)}
+                      className="py-1.5 px-3 rounded-sm bg-violet-500 text-white cursor-pointer"
+                    >
+                      Submit
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
