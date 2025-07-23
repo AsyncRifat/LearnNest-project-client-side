@@ -20,8 +20,6 @@ const MyClass = () => {
     },
   });
 
-  console.log(allClassInfo);
-
   return (
     <div>
       <h2 className="font-quicksand text-2xl font-bold mb-2 text-gray-800 dark:text-gray-200">
