@@ -12,7 +12,7 @@ const TeacherRoute = ({ children }) => {
     return <LoadingSpinner />;
   }
 
-  if (!user || role !== 'admin') {
+  if (!user || role === 'teacher') {
     return <Navigate to="/forbidden" />;
   }
 

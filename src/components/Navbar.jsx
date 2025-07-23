@@ -9,14 +9,11 @@ import { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { MdDashboard } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
 
   const handleUserSignOut = () => {
     logOut()
@@ -27,16 +24,6 @@ const Navbar = () => {
         console.log(error);
       });
   };
-
-  useEffect(() => {
-    const handleClickOutside = e => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const link = (
     <>

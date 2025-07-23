@@ -11,7 +11,7 @@ const AdminRoute = ({ children }) => {
     return <LoadingSpinner />;
   }
 
-  if (!user || role !== 'admin') {
+  if (!user || role === 'admin') {
     return <Navigate to="/forbidden" />;
   }
 
