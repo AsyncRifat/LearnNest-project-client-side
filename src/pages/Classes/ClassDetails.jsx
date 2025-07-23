@@ -40,7 +40,7 @@ const ClassDetailsWithToggleReview = () => {
       setSirEmail(singleApprovedClass.email);
     }
   }, [singleApprovedClass]);
-  console.log(sirEmail);
+  // console.log(sirEmail);
 
   const { data: terReport } = useQuery({
     queryKey: ['terReport', sirEmail],
@@ -50,7 +50,7 @@ const ClassDetailsWithToggleReview = () => {
       return data;
     },
   });
-  console.log(terReport);
+  // console.log(terReport);
 
   if (isLoading) {
     return <LoadingSpinner />;

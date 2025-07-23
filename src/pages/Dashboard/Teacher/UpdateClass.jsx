@@ -71,7 +71,7 @@ const UpdateClass = () => {
         status: 'pending',
         enrolled: 0,
       };
-      console.log(updatedClass);
+      // console.log(updatedClass);
 
       const res = await axiosSecure.put(`/update-class/${id}`, updatedClass);
 

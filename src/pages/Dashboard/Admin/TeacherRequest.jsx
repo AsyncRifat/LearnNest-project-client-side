@@ -45,7 +45,7 @@ const TeacherRequest = () => {
     });
   };
   const handleRejected = req => {
-    console.log('Rejected');
+    // console.log('Rejected');
     updateUserStatus({
       id: req?._id,
       data: { status: 'rejected' },

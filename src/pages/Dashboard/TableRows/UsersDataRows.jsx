@@ -15,7 +15,7 @@ const UserDataRows = ({ user, refetch }) => {
   });
 
   const handleMakeAdmin = id => {
-    console.log('admin making', id);
+    // console.log('admin making', id);
     updateUserStatus({
       id: id,
       data: { role: 'admin' },

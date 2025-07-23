@@ -9,11 +9,14 @@ import { FaUser } from 'react-icons/fa';
 import MenuItem from '../Menu/MenuItem';
 import useAuth from '../../../hooks/useAuth';
 import { useNavigate } from 'react-router';
+import useUserRole from '../../../hooks/useUserRole';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 const Sidebar = () => {
   const [isActive, setActive] = useState(false);
 
+  const [role, isRoleLoading] = useUserRole();
+
   const { logOut } = useAuth();
-  // console.log(user);
   const navigate = useNavigate();
 
   // Sidebar Responsive Handler
@@ -31,6 +34,14 @@ const Sidebar = () => {
         console.log(error);
       });
   };
+
+  if (isRoleLoading) {
+    return (
+      <div>
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -65,9 +76,9 @@ const Sidebar = () => {
           <div className="flex flex-col justify-between flex-1 mt-6 dark:text-white">
             <nav>
               {/*  Menu Items */}
-              <AdminMenu />
-              <TeacherMenu />
-              <StudentMenu />
+              {role === 'admin' && <AdminMenu />}
+              {role === 'teacher' && <TeacherMenu />}
+              {role === 'student' && <StudentMenu />}
             </nav>
           </div>
         </div>

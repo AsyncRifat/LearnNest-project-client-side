@@ -21,6 +21,9 @@ import ClassDetails from '../pages/Classes/ClassDetails';
 import MyClassDetails from '../pages/Dashboard/Teacher/MyClassDetails';
 import MyEnrollClassDetails from '../pages/Dashboard/Student/MyEnrollClassDetails';
 import UpdateClass from '../pages/Dashboard/Teacher/UpdateClass';
+import AdminRoute from './AdminRoute/AdminRoute';
+import TeacherRoute from './TeacherRoute/TeacherRoute';
+import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
 
 export const router = createBrowserRouter([
   {
@@ -83,41 +86,65 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <p className="text-center text-2xl font-bold text-green-600">
-            Welcome My Website
-          </p>
-        ),
+        Component: DashboardHome,
       },
       // Admin panel
       {
         path: 'teacher-request',
-        element: <TeacherRequest />,
+        element: (
+          <AdminRoute>
+            <TeacherRequest />
+          </AdminRoute>
+        ),
       },
       {
         path: 'users-request',
-        element: <Users />,
+        element: (
+          <AdminRoute>
+            <Users />
+          </AdminRoute>
+        ),
       },
       {
         path: 'all-classes-request',
-        element: <AllClassesAdmin />,
+        element: (
+          <AdminRoute>
+            <AllClassesAdmin />
+          </AdminRoute>
+        ),
       },
       // Teacher panel
       {
         path: 'add-class',
-        element: <AddClass />,
+        element: (
+          <TeacherRoute>
+            <AddClass />
+          </TeacherRoute>
+        ),
       },
       {
         path: 'my-class',
-        element: <MyClass />,
+        element: (
+          <TeacherRoute>
+            <MyClass />
+          </TeacherRoute>
+        ),
       },
       {
         path: 'update-my-class/:id',
-        element: <UpdateClass />,
+        element: (
+          <TeacherRoute>
+            <UpdateClass />
+          </TeacherRoute>
+        ),
       },
       {
         path: 'my-class/:id',
-        element: <MyClassDetails />,
+        element: (
+          <TeacherRoute>
+            <MyClassDetails />
+          </TeacherRoute>
+        ),
       },
       // student panel
       {

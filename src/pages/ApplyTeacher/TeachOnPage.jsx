@@ -4,9 +4,11 @@ import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import { usePostData } from '../../utils/utils';
 import toast from 'react-hot-toast';
+import useUserRole from '../../hooks/useUserRole';
 
 const TeachOnPage = () => {
   useDocumentTitle('LearnNest | Request');
+  const [role] = useUserRole();
 
   const { user } = useAuth();
   const name = user?.displayName;
@@ -133,7 +135,11 @@ const TeachOnPage = () => {
             <div className="pt-3">
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 transition-colors text-white py-3 px-6 rounded-xl font-semibold shadow-lg"
+                disabled={role === 'teacher'}
+                className={`w-full bg-green-600 hover:bg-green-700 transition-colors text-white py-3 px-6 rounded-xl font-semibold shadow-lg ${
+                  role === 'teacher' && 'disabled:cursor-not-allowed'
+                }`}
+                title="You Already Teacher"
               >
                 Submit for Review
               </button>
