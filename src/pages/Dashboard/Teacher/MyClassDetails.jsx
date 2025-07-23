@@ -4,10 +4,35 @@ import { MdAddCircleOutline } from 'react-icons/md';
 
 import AssignmentModal from '../Modal/AssignmentModal';
 import useDocumentTitle from '../../../utils/useDocumentTitle';
+import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useParams } from 'react-router';
 
 const MyClassDetails = () => {
   useDocumentTitle('My Class Details');
   const [isOpen, setIsOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const { id } = useParams();
+
+  const { data: classInfo = [], isLoading } = useQuery({
+    queryKey: ['totalEnrollCount'],
+    queryFn: async () => {
+      const res = await axiosSecure(`/all-enrolled/${id}`);
+      const data = res.data;
+      return data;
+    },
+  });
+  const totalEnroll = classInfo?.enrolled || 0;
+
+  const { data: assignmentCount = [] } = useQuery({
+    queryKey: ['totalAssignmentCount'],
+    queryFn: async () => {
+      const res = await axiosSecure(`/all-assignment-count/${id}`);
+      const data = res.data;
+      return data;
+    },
+  });
+  const totalAssignmentCount = assignmentCount || 0;
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -19,17 +44,23 @@ const MyClassDetails = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
         <div className="bg-white shadow-md rounded-xl p-6 flex items-center gap-4">
           <FaUserGraduate className="text-4xl text-blue-500" />
-          <div>
-            <p className="text-gray-600 text-sm">Total Enrolled</p>
-            <p className="text-xl font-bold text-gray-800">233</p>
-          </div>
+          {isLoading ? (
+            <span className="loading loading-spinner loading-md text-black"></span>
+          ) : (
+            <div>
+              <p className="text-gray-600 text-sm">Total Enrolled</p>
+              <p className="text-xl font-bold text-gray-800">{totalEnroll}</p>
+            </div>
+          )}
         </div>
 
         <div className="bg-white shadow-md rounded-xl p-6 flex items-center gap-4">
           <FaTasks className="text-4xl text-emerald-500" />
           <div>
             <p className="text-gray-600 text-sm">Total Assignments</p>
-            <p className="text-xl font-bold text-gray-800">22</p>
+            <p className="text-xl font-bold text-gray-800">
+              {totalAssignmentCount}
+            </p>
           </div>
         </div>
 
@@ -37,7 +68,7 @@ const MyClassDetails = () => {
           <FaFileAlt className="text-4xl text-purple-500" />
           <div>
             <p className="text-gray-600 text-sm">Total Submissions</p>
-            <p className="text-xl font-bold text-gray-800">444</p>
+            <p className="text-xl font-bold text-gray-800">1</p>
           </div>
         </div>
       </div>
