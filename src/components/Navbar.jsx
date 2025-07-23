@@ -9,11 +9,14 @@ import { useState } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { MdDashboard } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 
 const Navbar = () => {
   const { logOut, user } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleUserSignOut = () => {
     logOut()
@@ -24,6 +27,16 @@ const Navbar = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    const handleClickOutside = e => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const link = (
     <>
@@ -55,7 +68,7 @@ const Navbar = () => {
             : ' py-1 px-2 md:ml-1'
         }
       >
-        Teach on{' '}
+        Teach on
         <span className="font-bold font-quicksand text-base">LearnNest</span>
       </NavLink>
 
@@ -100,13 +113,13 @@ const Navbar = () => {
                     <MdDashboard size={20} className="text-cyan-700" />
                     Dashboard
                   </Link>
-                  <Link
+                  <button
                     onClick={handleUserSignOut}
                     className="flex items-center gap-2 px-3 py-2.5 active:bg-gray-400 hover:bg-gray-300"
                   >
                     <RiLogoutBoxRLine size={20} className="text-red-500" />
                     Log Out
-                  </Link>
+                  </button>
                 </div>
               </div>
             )}

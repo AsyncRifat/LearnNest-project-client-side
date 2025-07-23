@@ -3,14 +3,15 @@ import AllApprovedClassesCard from '../../card/AllApprovedClassesCard';
 import useDocumentTitle from '../../utils/useDocumentTitle';
 import SkeletonLoaderCard from '../shared/SkeletonLoaderCard';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+// import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { GrFormNextLink, GrFormPreviousLink } from 'react-icons/gr';
+import useAxios from '../../hooks/useAxios';
 
 const AllClasses = () => {
   useDocumentTitle('LearnNest | All Classes');
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxios();
 
   // done: pagination
   const [page, setPage] = useState(0);
