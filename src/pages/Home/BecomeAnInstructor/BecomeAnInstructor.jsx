@@ -20,14 +20,15 @@ const BecomeAnInstructor = () => {
   return (
     <>
       <div
-        data-aos="fade-up-right"
-        className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-5 md:pt-24 pb-5 bg-violet-50 dark:bg-gray-900 px-9"
+        data-aos="zoom-in"
+        data-aos-duration="1000"
+        className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-violet-50 dark:bg-gray-900 px-2 md:px-9 py-10 md:py-24 lg:py-32 xl:py-48"
       >
         <div className="col-span-1">
           <img
             src={teacher}
             alt=""
-            className="object-cover rounded-3xl h-[437px] w-full"
+            className="object-cover rounded-md h-[437px] w-full"
           />
         </div>
 

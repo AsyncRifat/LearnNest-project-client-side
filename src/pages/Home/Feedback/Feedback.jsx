@@ -5,20 +5,20 @@ import 'slick-carousel/slick/slick-theme.css';
 
 const testimonials = [
   {
-    name: 'Mr.Rezwan',
-    role: 'Senior Product Designer',
+    name: 'Manuel C. Collinson',
+    role: 'IELTS candidate',
     quote:
       'A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.',
   },
   {
     name: 'Rifat Mondol',
-    role: 'CTO',
+    role: 'Web designer',
     quote:
       'A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.',
   },
   {
     name: 'Ibrahim Rifat',
-    role: 'CEO',
+    role: 'Full stack developer',
     quote:
       'A posture corrector works by providing support and gentle alignment to your shoulders, back, and spine, encouraging you to maintain proper posture throughout the day.',
   },
@@ -92,7 +92,7 @@ export default function TestimonialSlider() {
         <Slider {...settings}>
           {testimonials.map((item, index) => (
             <div key={index} className="px-4 my-8">
-              <div className="bg-white rounded-2xl p-8 shadow-md min-h-[300px] text-left transition-all duration-300 hover:opacity-100 opacity-70 slick-center:opacity-100 hover:scale-110 ">
+              <div className="bg-white rounded-2xl p-8 shadow-md min-h-[300px] text-left transition-all duration-300 hover:opacity-100 opacity-90 slick-center:opacity-100 hover:scale-110 ">
                 <FaQuoteLeft size={50} className="text-green-700 mb-2" />
                 <p className="text-gray-700 mb-6">{item.quote}</p>
                 <hr className="border-dashed border-gray-300 mb-4" />

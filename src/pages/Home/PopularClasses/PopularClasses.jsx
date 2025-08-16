@@ -19,10 +19,7 @@ const PopularClasses = () => {
     return <p className="text-center py-6">Loading top classes...</p>;
 
   return (
-    <div
-      data-aos="zoom-in-up"
-      className=" my-10 md:my-16 px-4 max-w-6xl mx-auto"
-    >
+    <div data-aos="zoom-in" className=" my-10 md:my-16 md:px-4 mx-auto">
       <div className="max-w-6xl mx-auto mb-6 text-center">
         <h1 className="mb-5 md:mb-10">
           <span className="font-extrabold text-green-700 text-3xl">| </span>

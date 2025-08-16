@@ -4,9 +4,9 @@ import { FaChalkboardTeacher, FaUserGraduate, FaUsers } from 'react-icons/fa';
 const CountUpPage = () => {
   return (
     <div
-      data-aos="fade-left"
+      data-aos="zoom-in"
       data-aos-duration="1000"
-      className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-5 md:mt-24"
+      className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-10 mt-5 md:mt-24 mx-4 lg:mx-0"
     >
       <div className="col-span-1 flex gap-x-5 flex-col">
         <div className="pl-10">
@@ -54,11 +54,11 @@ const CountUpPage = () => {
         </div>
       </div>
 
-      <div className="col-span-1">
+      <div className="col-span-1 lg:mr-11">
         <img
-          src="https://i.ibb.co/fYn7Dwhg/Screenshot-2025-07-17-at-18-24-55.png"
+          src="https://res.cloudinary.com/dtckwuhxw/image/upload/v1755362002/online_clas_vedhom.jpg"
           alt=""
-          className="object-cover rounded-3xl"
+          className="object-cover rounded-md"
         />
       </div>
     </div>

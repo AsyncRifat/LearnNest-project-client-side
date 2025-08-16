@@ -44,15 +44,21 @@ const Home = () => {
   }
 
   return (
-    <div>
-      <Banner />
+    <div className="space-y-52">
+      <div className="mx-5">
+        <Banner />
+      </div>
       <Partners />
-      <PopularClasses />
+      <div className="mx-16">
+        <PopularClasses />
+      </div>
       <CountUpPage />
       <Feedback />
       <BecomeAnInstructor />
       <FaqSection />
-      <ContactComponent />
+      <div className="mt-44">
+        <ContactComponent />
+      </div>
     </div>
   );
 };

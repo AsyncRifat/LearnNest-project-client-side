@@ -63,7 +63,7 @@ const AllClasses = () => {
   };
 
   return (
-    <>
+    <div className="w-11/12 mx-auto">
       <div className="text-center">
         <h2 className="font-quicksand text-2xl font-bold mb-3 text-center text-gray-800 dark:text-gray-200">
           All Classes
@@ -141,7 +141,7 @@ const AllClasses = () => {
           <option value="24">24</option>
         </select>
       </div>
-    </>
+    </div>
   );
 };
 

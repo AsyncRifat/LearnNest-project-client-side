@@ -1,58 +1,145 @@
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaRegArrowAltCircleRight,
+} from 'react-icons/fa';
 import LogoLN from '../../shared/LogoLN';
+import toast from 'react-hot-toast';
+import { BiWorld } from 'react-icons/bi';
+import { Link } from 'react-router';
 
 const ContactComponent = () => {
+  const handleSubscribe = () => {
+    toast.success('Subscribed');
+  };
   return (
     <section
-      data-aos="zoom-in-right"
-      className="bg-violet-50 dark:bg-gray-900 py-10 px-4 md:px-0 my-15"
+      data-aos="zoom-in"
+      data-aos-duration="1000"
+      className="bg-violet-50 dark:bg-gray-900 pb-15"
     >
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Logo */}
-        <LogoLN />
-
-        {/* Title & Description */}
-        <h2 className="font-medium font-quicksand text-2xl text-gray-800 dark:text-gray-200 mb-2">
-          Get in Touch
-        </h2>
+      {/* Title & Description */}
+      {/* <div className="text-center mb-10">
+        <h1 className="flex items-center justify-center">
+          <span className="font-extrabold text-green-700 text-3xl">| </span>
+          <span className="font-medium font-quicksand text-2xl text-gray-800 dark:text-gray-200 mb-2">
+            Get in Touch
+          </span>
+        </h1>
         <p className="mt-3 mb-5 text-gray-500 dark:text-gray-400 text-sm font-thin">
           Have questions or need support? We're here to help. Reach out to us
           using any of the methods below.
         </p>
+      </div> */}
+
+      <div className="w-full text-center">
+        <section className="relative h-[400px] md:h-[600px] bg-[url('https://res.cloudinary.com/dtckwuhxw/image/upload/v1755349068/contact_xkdzcw.jpg')] bg-center bg-cover bg-no-repeat ">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
+
+          {/* Content */}
+          <div className="relative flex h-full items-center justify-start px-3 md:px-24">
+            <div className="text-white flex flex-col items-start space-y-4">
+              <h1 className="text-3xl md:text-5xl font-bold font-quicksand">
+                Lets Start Online Learning
+              </h1>
+              <p className="max-w-md text-lg opacity-90 text-left">
+                Learn at your own pace with curated courses and bite-size
+                lessons.
+              </p>
+              <button className="py-2 px-4 bg-green-600 hover:bg-green-500 rounded-sm underline">
+                Start free trial
+              </button>
+            </div>
+          </div>
+        </section>
 
         {/* Contact Info */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Phone */}
-          <div className="flex flex-col items-center">
-            <FaPhoneAlt size={24} className="text-violet-600 mb-2" />
-            <h4 className="text-lg font-medium text-gray-700 dark:text-gray-200">
-              Phone
-            </h4>
-            <p className="text-gray-600 dark:text-gray-200 text-sm font-thin">
-              +880 17371-68011
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-10 px-4 md:px-2 lg:px-0 mx-16">
+          <div>
+            {/* Logo */}
+            <LogoLN />
+            {/* <p>Learn first</p> */}
           </div>
 
-          {/* Email */}
-          <div className="flex flex-col items-center">
-            <FaEnvelope size={24} className="text-violet-600 mb-2" />
-            <h4 className="text-lg font-medium text-gray-700 dark:text-gray-200">
-              Email
-            </h4>
-            <p className="text-gray-600 dark:text-gray-200 text-sm font-thin">
-              ibrahim3rifat@gmail.com
-            </p>
+          <div className="flex flex-col items-start text-left">
+            <h1 className="font-quicksand text-2xl font-bold mt-4">Service</h1>
+            <div className="w-16 h-[2px] bg-green-500 my-7"></div>
+            <div className="space-y-3 flex flex-col items-start justify-center text-left">
+              <div className="flex items-center justify-center gap-x-2 text-left hover:underline">
+                <FaRegArrowAltCircleRight size={20} />
+                <Link
+                  to={'/all-approved-classes'}
+                  className="font-medium font-medium"
+                >
+                  All classes
+                </Link>
+              </div>
+              <div className="flex items-center justify-center gap-x-2 text-left hover:underline">
+                <FaRegArrowAltCircleRight size={20} />
+                <Link to={'/teacher-request'} className="font-medium">
+                  Become Teacher
+                </Link>
+              </div>
+              <div className="flex items-center justify-center gap-x-2 text-left">
+                <FaRegArrowAltCircleRight size={20} className="font-medium" />
+                <Link to={'/dashboard'}>Dashboard</Link>
+              </div>
+            </div>
           </div>
 
-          {/* Location */}
-          <div className="flex flex-col items-center">
-            <FaMapMarkerAlt size={24} className="text-violet-600 mb-2" />
-            <h4 className="text-lg font-medium text-gray-700 dark:text-gray-200">
-              Location
-            </h4>
-            <p className="text-gray-600 dark:text-gray-200 text-sm font-thin">
-              Dhaka, Bangladesh
-            </p>
+          <div className=" flex flex-col items-start justify-center text-left space-y-3  mt-4">
+            <h1 className="font-quicksand text-2xl font-bold">
+              Contact Info +
+            </h1>
+            <div className="w-16 h-[2px] bg-green-500 my-7"></div>
+
+            {/* Phone */}
+            <div className="flex items-center justify-center gap-x-2 text-left">
+              <FaPhoneAlt size={20} className="text-violet-600" />
+              <span className="text-gray-600 dark:text-gray-200 text-md font-medium">
+                +880 17371-68011
+              </span>
+            </div>
+
+            {/* Email */}
+            <div className="flex items-center justify-center gap-x-2 text-left">
+              <FaEnvelope size={20} className="text-violet-600 " />
+              <span className="text-gray-600 dark:text-gray-200 text-md font-medium">
+                ibrahim3rifat@gmail.com
+              </span>
+            </div>
+
+            {/* Location */}
+            <div className="flex items-center justify-center gap-x-2 text-left">
+              <FaMapMarkerAlt size={24} className="text-violet-600" />
+              <span className="text-gray-600 dark:text-gray-200 text-md font-medium">
+                Dhaka, Bangladesh
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-x-2 text-left">
+              <BiWorld size={24} className="text-violet-600" />
+              <span className="text-gray-600 dark:text-gray-200 text-md font-medium">
+                ibrahim-rifat-portfolio.web.app
+              </span>
+            </div>
+          </div>
+
+          <div className="border-2 border-green-700 rounded-md text-left p-4">
+            <h1 className="font-quicksand text-2xl font-bold">Subscribe Now</h1>
+            <div className="w-16 h-[2px] bg-green-500 my-7"></div>
+            <input
+              type="text"
+              className="input py-7 "
+              placeholder="Inter your mail"
+            />
+            <button
+              onClick={handleSubscribe}
+              className="py-2 px-4 bg-green-600 hover:bg-green-500 font-medium rounded-md mt-5"
+            >
+              Subscribe Now
+            </button>
           </div>
         </div>
       </div>

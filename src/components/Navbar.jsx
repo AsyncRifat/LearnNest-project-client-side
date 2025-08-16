@@ -141,7 +141,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-40 ">
       <div className="navbar relative z-10 bg-base-100 dark:bg-[#2C3A47] shadow-sm group md:h-[74px]">
-        <div className="navbar-start">
+        <div className="navbar-start ml-2">
           <LogoLN />
         </div>
 

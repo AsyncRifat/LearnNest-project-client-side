@@ -1,10 +1,9 @@
 const FaqSection = () => {
   return (
     <div
-      data-aos="fade-down"
-      data-aos-easing="linear"
-      data-aos-duration="1500"
-      className="mx-20 mb-10 mt-20"
+      data-aos="zoom-in"
+      data-aos-duration="1000"
+      className="mx-2 md:mx-20 mb-10 mt-20"
     >
       <div className="text-center">
         <h1 className="mb-5 md:mb-10">
@@ -21,7 +20,7 @@ const FaqSection = () => {
           you covered.
         </p>
       </div>
-      <div className="px-10 space-y-4 mt-10">
+      <div className="px-0 md:px-10 space-y-4 mt-10">
         <div className="collapse collapse-arrow bg-violet-50 dark:bg-gray-800 border border-base-300 rounded-2xl">
           <input type="radio" name="my-accordion-2" defaultChecked />
           <div className="collapse-title font-semibold">
