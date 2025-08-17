@@ -26,6 +26,7 @@ import TeacherRoute from './TeacherRoute/TeacherRoute';
 import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
 import Service from '../pages/ServicePage/Service';
 import Fee from '../pages/Fee/Fee';
+import PieChartStats from '../components/pieChart/PieChartStats';
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +89,7 @@ export const router = createBrowserRouter([
 
   {
     path: '/dashboard',
+    errorElement: <ErrorPage />,
     element: (
       <PrivateRoute>
         <DashboardLayout />
@@ -99,6 +101,14 @@ export const router = createBrowserRouter([
         Component: DashboardHome,
       },
       // Admin panel
+      {
+        path: 'stats',
+        element: (
+          <AdminRoute>
+            <PieChartStats />
+          </AdminRoute>
+        ),
+      },
       {
         path: 'teacher-request',
         element: (

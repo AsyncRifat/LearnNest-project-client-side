@@ -1,7 +1,8 @@
+import PieChartStats from '../../../components/pieChart/PieChartStats';
 import useUserRole from '../../../hooks/useUserRole';
 import Forbidden from '../../Forbidden/Forbidden';
 import LoadingSpinner from '../../shared/LoadingSpinner';
-import TeacherRequest from '../Admin/TeacherRequest';
+// import TeacherRequest from '../Admin/TeacherRequest';
 import MyEnrollClass from '../Student/MyEnrollClass';
 import MyClass from '../Teacher/MyClass';
 
@@ -11,7 +12,7 @@ const DashboardHome = () => {
   if (isRoleLoading) {
     return <LoadingSpinner />;
   } else if (role === 'admin') {
-    return <TeacherRequest />;
+    return <PieChartStats />;
   } else if (role === 'teacher') {
     return <MyClass />;
   } else if (role === 'student') {

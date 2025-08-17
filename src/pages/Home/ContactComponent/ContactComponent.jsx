@@ -9,11 +9,12 @@ import {
 import LogoLN from '../../shared/LogoLN';
 import toast from 'react-hot-toast';
 import { BiWorld } from 'react-icons/bi';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { CiLinkedin } from 'react-icons/ci';
 import { FaSquareXTwitter } from 'react-icons/fa6';
 
 const ContactComponent = () => {
+  const navigate = useNavigate();
   const handleSubscribe = () => {
     toast.success('Subscribed');
   };
@@ -37,7 +38,10 @@ const ContactComponent = () => {
                 Learn at your own pace with curated courses and bite-size
                 lessons.
               </p>
-              <button className="py-2 px-4 bg-green-600 hover:bg-green-500 rounded-sm underline">
+              <button
+                onClick={() => navigate('/fee')}
+                className="py-2 px-4 bg-green-600 hover:bg-green-500 rounded-sm underline"
+              >
                 Start free trial
               </button>
             </div>

@@ -11,6 +11,7 @@ import BecomeAnInstructor from './BecomeAnInstructor/BecomeAnInstructor';
 import FaqSection from './FAQ/FaqSection';
 import ContactComponent from './ContactComponent/ContactComponent';
 import PopularClasses from './PopularClasses/PopularClasses';
+import Fee from '../Fee/Fee';
 
 const Home = () => {
   useDocumentTitle('LearnNest | Home');
@@ -44,18 +45,37 @@ const Home = () => {
   }
 
   return (
-    <div className="space-y-52">
+    <div className="space-y-36">
       <div className="mx-5">
         <Banner />
       </div>
-      <Partners />
-      <div className="mx-3 md:mx-16">
+
+      <div>
+        <Partners />
+      </div>
+
+      <div className="mx-3 md:mx-16 pt-10">
         <PopularClasses />
       </div>
-      <CountUpPage />
-      <Feedback />
-      <BecomeAnInstructor />
-      <FaqSection />
+      <div className="pt-10">
+        <CountUpPage />
+      </div>
+      <div className="pt-10">
+        <Feedback />
+      </div>
+      <div className="pt-10">
+        <BecomeAnInstructor />
+      </div>
+
+      <div className="pt-5">
+        <FaqSection />
+      </div>
+
+      <div className="mt-32">
+        <Fee />
+      </div>
+      {/* <Fee /> */}
+
       <div className="mt-44">
         <ContactComponent />
       </div>

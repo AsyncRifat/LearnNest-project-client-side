@@ -12,7 +12,7 @@ const logos = [logo1, logo2, logo3, logo4, logo5, logo6, logo7];
 
 const Partners = () => {
   return (
-    <section className=" py-15 px-2 mt-10 md:mx-20">
+    <section className=" px-2 md:mx-20">
       <div className="max-w-6xl mx-auto mb-6 text-center">
         <h1 className="mb-5 md:mb-10">
           <span className="font-extrabold text-green-700 text-3xl">| </span>
