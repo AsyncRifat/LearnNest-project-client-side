@@ -49,7 +49,7 @@ const Home = () => {
         <Banner />
       </div>
       <Partners />
-      <div className="mx-16">
+      <div className="mx-3 md:mx-16">
         <PopularClasses />
       </div>
       <CountUpPage />

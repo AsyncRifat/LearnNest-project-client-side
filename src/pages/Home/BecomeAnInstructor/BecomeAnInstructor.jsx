@@ -32,7 +32,7 @@ const BecomeAnInstructor = () => {
           />
         </div>
 
-        <div className="col-span-1 pl-10">
+        <div className="col-span-1 md:pl-10">
           <div>
             <h2>
               <span className="font-extrabold text-green-700 text-3xl">| </span>

@@ -3,11 +3,15 @@ import {
   FaEnvelope,
   FaMapMarkerAlt,
   FaRegArrowAltCircleRight,
+  FaFacebookSquare,
+  FaGithub,
 } from 'react-icons/fa';
 import LogoLN from '../../shared/LogoLN';
 import toast from 'react-hot-toast';
 import { BiWorld } from 'react-icons/bi';
 import { Link } from 'react-router';
+import { CiLinkedin } from 'react-icons/ci';
+import { FaSquareXTwitter } from 'react-icons/fa6';
 
 const ContactComponent = () => {
   const handleSubscribe = () => {
@@ -56,22 +60,69 @@ const ContactComponent = () => {
 
         {/* Contact Info */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-10 px-4 md:px-2 lg:px-0 mx-16">
-          <div>
+          <div className="flex flex-col items-start text-lef space-y-5">
             {/* Logo */}
-            <LogoLN />
-            {/* <p>Learn first</p> */}
+            <div>
+              <LogoLN />
+            </div>
+            <p className="text-left font-semibold text-lg font-quicksand ">
+              A Nest for Learners,
+              <br />A Flight for Dreamers
+            </p>
+
+            <div className="flex items-center gap-x-3.5">
+              <a
+                href="www.linkedin.com/in/ibrahim-rifat"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <CiLinkedin
+                  size={39}
+                  className="text-blue-800 hover:opacity-80 transition"
+                />
+              </a>
+
+              <a
+                href="https://www.facebook.com/ibrahimrifatOfficial"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebookSquare
+                  size={32}
+                  className="text-blue-600 hover:opacity-80 transition"
+                />
+              </a>
+
+              <a
+                href="https://twitter.com/itsibrahimrifat"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaSquareXTwitter
+                  size={32}
+                  className="hover:opacity-80 transition"
+                />
+              </a>
+
+              <a
+                href="https://github.com/AsyncRifat"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaGithub size={32} className="hover:opacity-80 transition" />
+              </a>
+            </div>
           </div>
 
-          <div className="flex flex-col items-start text-left">
-            <h1 className="font-quicksand text-2xl font-bold mt-4">Service</h1>
-            <div className="w-16 h-[2px] bg-green-500 my-7"></div>
+          <div className="flex flex-col items-start justify-center text-left space-y-12">
+            <div>
+              <h1 className="font-quicksand text-2xl font-bold">Service</h1>
+              <div className="w-16 h-[2px] bg-green-500 mt-10"></div>
+            </div>
             <div className="space-y-3 flex flex-col items-start justify-center text-left">
               <div className="flex items-center justify-center gap-x-2 text-left hover:underline">
                 <FaRegArrowAltCircleRight size={20} />
-                <Link
-                  to={'/all-approved-classes'}
-                  className="font-medium font-medium"
-                >
+                <Link to={'/all-approved-classes'} className="font-medium">
                   All classes
                 </Link>
               </div>
@@ -88,11 +139,11 @@ const ContactComponent = () => {
             </div>
           </div>
 
-          <div className=" flex flex-col items-start justify-center text-left space-y-3  mt-4">
+          <div className=" flex flex-col items-start justify-center text-left space-y-3">
             <h1 className="font-quicksand text-2xl font-bold">
               Contact Info +
             </h1>
-            <div className="w-16 h-[2px] bg-green-500 my-7"></div>
+            <div className="w-16 h-[2px] bg-green-500 my-5"></div>
 
             {/* Phone */}
             <div className="flex items-center justify-center gap-x-2 text-left">
@@ -120,9 +171,12 @@ const ContactComponent = () => {
 
             <div className="flex items-center justify-center gap-x-2 text-left">
               <BiWorld size={24} className="text-violet-600" />
-              <span className="text-gray-600 dark:text-gray-200 text-md font-medium">
+              <a
+                href="https://ibrahim-rifat-portfolio.web.app/"
+                className="text-gray-600 dark:text-gray-200 text-md font-medium"
+              >
                 ibrahim-rifat-portfolio.web.app
-              </span>
+              </a>
             </div>
           </div>
 
@@ -130,9 +184,9 @@ const ContactComponent = () => {
             <h1 className="font-quicksand text-2xl font-bold">Subscribe Now</h1>
             <div className="w-16 h-[2px] bg-green-500 my-7"></div>
             <input
-              type="text"
+              type="email"
               className="input py-7 "
-              placeholder="Inter your mail"
+              placeholder="Your Email Here"
             />
             <button
               onClick={handleSubscribe}
