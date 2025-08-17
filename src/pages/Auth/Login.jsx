@@ -115,7 +115,7 @@ const Login = () => {
               onClick={() => {
                 setShowPassword(!showPassword);
               }}
-              className="absolute top-2.5 right-55"
+              className="absolute right-5 bottom-2.5 md:top-2.5 md:right-55"
             >
               {showPassword ? <IoEyeOff size={20} /> : <IoEye size={20} />}
             </button>
