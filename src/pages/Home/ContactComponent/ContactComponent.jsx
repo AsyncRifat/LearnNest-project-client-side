@@ -23,20 +23,6 @@ const ContactComponent = () => {
       data-aos-duration="1000"
       className="bg-violet-50 dark:bg-gray-900 pb-15"
     >
-      {/* Title & Description */}
-      {/* <div className="text-center mb-10">
-        <h1 className="flex items-center justify-center">
-          <span className="font-extrabold text-green-700 text-3xl">| </span>
-          <span className="font-medium font-quicksand text-2xl text-gray-800 dark:text-gray-200 mb-2">
-            Get in Touch
-          </span>
-        </h1>
-        <p className="mt-3 mb-5 text-gray-500 dark:text-gray-400 text-sm font-thin">
-          Have questions or need support? We're here to help. Reach out to us
-          using any of the methods below.
-        </p>
-      </div> */}
-
       <div className="w-full text-center">
         <section className="relative h-[400px] md:h-[600px] bg-[url('https://res.cloudinary.com/dtckwuhxw/image/upload/v1755349068/contact_xkdzcw.jpg')] bg-center bg-cover bg-no-repeat ">
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
