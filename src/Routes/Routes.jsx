@@ -24,6 +24,8 @@ import UpdateClass from '../pages/Dashboard/Teacher/UpdateClass';
 import AdminRoute from './AdminRoute/AdminRoute';
 import TeacherRoute from './TeacherRoute/TeacherRoute';
 import DashboardHome from '../pages/Dashboard/DashboardHome/DashboardHome';
+import Service from '../pages/ServicePage/Service';
+import Fee from '../pages/Fee/Fee';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ export const router = createBrowserRouter([
       {
         path: 'all-approved-classes',
         Component: AllClasses,
+      },
+      {
+        path: 'service',
+        Component: Service,
+      },
+      {
+        path: 'fee',
+        Component: Fee,
       },
       {
         path: 'classDetails/:id',

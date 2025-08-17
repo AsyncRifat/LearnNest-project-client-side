@@ -47,6 +47,27 @@ const Navbar = () => {
       >
         All Classes
       </NavLink>
+
+      <NavLink
+        to="/service"
+        className={({ isActive }) =>
+          isActive
+            ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
+            : ' py-1 px-2 md:ml-1'
+        }
+      >
+        Service
+      </NavLink>
+      <NavLink
+        to="/fee"
+        className={({ isActive }) =>
+          isActive
+            ? 'bg-gray-200 dark:bg-gray-700 rounded-lg py-1 px-2 md:ml-1 '
+            : ' py-1 px-2 md:ml-1'
+        }
+      >
+        Fee
+      </NavLink>
       <NavLink
         to="/teacher-request"
         className={({ isActive }) =>
