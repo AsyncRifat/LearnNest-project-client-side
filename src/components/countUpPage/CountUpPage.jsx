@@ -1,7 +1,20 @@
+import { useQuery } from '@tanstack/react-query';
 import CountUp from 'react-countup';
 import { FaChalkboardTeacher, FaUserGraduate, FaUsers } from 'react-icons/fa';
+import useAxios from '../../hooks/useAxios';
 
 const CountUpPage = () => {
+  const axiosInstance = useAxios();
+
+  const { data: countUpSection = [] } = useQuery({
+    queryKey: ['countUpNumber'],
+    queryFn: async () => {
+      const res = await axiosInstance('/home-countUp');
+      const data = res.data;
+      return data;
+    },
+  });
+
   return (
     <div
       data-aos="zoom-in"
@@ -26,16 +39,26 @@ const CountUpPage = () => {
         <div className="grid grid-cols-2 gap-x-5 mx-auto my-auto">
           <div className="rounded-xl p-2 md:p-10 bg-gray-200 mb-2">
             <h2 className="text-4xl text-black text-center ">
-              <CountUp start={0} end={4} className="text-4xl "></CountUp>+
+              <CountUp
+                start={0}
+                end={countUpSection?.totalUser || 10}
+                className="text-4xl "
+              ></CountUp>
+              +
             </h2>
             <h4 className="text-gray-800 text-center text-lg flex items-center mt-3 gap-x-3">
               <FaUsers size={25} className="text-violet-600" />
-              Total Users
+              Total Students
             </h4>
           </div>
           <div className="rounded-xl p-2 md:p-10 bg-gray-200 mb-2">
             <h2 className="text-4xl text-black text-center ">
-              <CountUp start={0} end={167} className="text-4xl "></CountUp>+
+              <CountUp
+                start={0}
+                end={countUpSection?.totalClass || 20}
+                className="text-4xl"
+              ></CountUp>
+              +
             </h2>
             <h4 className="text-gray-800 text-center text-lg flex items-center mt-3 gap-x-3">
               <FaChalkboardTeacher size={25} className="text-violet-600" />
@@ -44,11 +67,16 @@ const CountUpPage = () => {
           </div>
           <div className="rounded-xl p-2 md:p-10 bg-gray-200 mb-2">
             <h2 className="text-4xl text-black text-center ">
-              <CountUp start={0} end={3267} className="text-4xl "></CountUp>+
+              <CountUp
+                start={0}
+                end={countUpSection?.totalTeacher || 14}
+                className="text-4xl "
+              ></CountUp>
+              +
             </h2>
             <h4 className="text-gray-800 text-center text-lg flex items-center mt-3 gap-x-3">
               <FaUserGraduate size={25} className="text-violet-600" /> Total
-              student
+              Teacher
             </h4>
           </div>
         </div>
